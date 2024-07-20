@@ -105,7 +105,15 @@ app.use("/api/mainevents", MainEvents);
 app.use("/api/sponsorslist", SponsorList);
 app.use("/api/upgraduation", UpGraduation);
 
-app.use("/api/submit/imgupload", upload.single("image"), CreateImageSubmission);
+app.use(
+  "/api/submit/imgupload",
+  upload.fields([
+    { name: "image", maxCount: 1 },
+    { name: "selfImage", maxCount: 1 },
+  ]),
+  CreateImageSubmission
+);
+
 
 app.get("/", (req, res) => {
   res.json({ message: "Hello from Amber server" });

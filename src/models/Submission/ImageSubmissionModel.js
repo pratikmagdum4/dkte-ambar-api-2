@@ -9,7 +9,7 @@ const imageSubmissionSchema = new mongoose.Schema({
   year: { type: String, default: "" },
   title: { type: String, default: "" },
   imageUrl: { type: String, default: "" },
-  
+  selfImage: { type: String, default: "" },
 });
 
 const ImageSubmissionSchema = mongoose.model(
