@@ -17,15 +17,18 @@ import MainEvents from "./MainEvents/MainEventsRoutes.js";
 import SponsorList from "./SponsorsList/SponsorsListRoutes.js";
 import UpGraduation from "./UpGraduation/UpGraduationRoutes.js";
 import ImageSubmissionRouter from "./Submission/ImageSubmissionRoutes.js";
-import { CreateImageSubmission, getImgUploads } from "../controllers/Submission/ImageSubmissionController.js";
+import { CreateImageSubmission, getImgUploads, getVerifiedImageByType, UpdateImageVerification } from "../controllers/Submission/ImageSubmissionController.js";
 import multer from "multer";
 import multerS3 from "multer-s3";
 import { S3Client } from "@aws-sdk/client-s3";
 import {
   CreateArticleSubmission,
   getArticles,
+  getVerifiedArticle,
+  UpdateArticleVerification,
+ 
 } from "../controllers/Submission/ArticleSubmissionController.js";
-import { CreateTechArticleSubmission, getTechArticles } from "../controllers/Submission/TechnicalArticleSubmissionController.js";
+import { CreateTechArticleSubmission, getTechArticles, getVerifiedTechArticle, UpdateTechArticleVerification } from "../controllers/Submission/TechnicalArticleSubmissionController.js";
 
 const router = Router();
 
@@ -113,6 +116,10 @@ router.use(
   CreateArticleSubmission
 );
 router.use("/article/get", getArticles);
+router.use("/article/getverified", getVerifiedArticle);
+router.use("/technical/getverified", getVerifiedTechArticle);
+router.use("/imgupload/getverified", getVerifiedImageByType);
+
 router.use("/technical/get", getTechArticles);
 router.use("/imgupload/get", getImgUploads);
 router.use(
@@ -120,5 +127,12 @@ router.use(
   upload.single("selfImage"),
   CreateTechArticleSubmission
 );
+
+
+router.use("/article/verify/:id", UpdateArticleVerification);
+router.use("/imgupload/verify/:id", UpdateImageVerification);
+router.use("/technical/verify/:id", UpdateTechArticleVerification);
+
+
 
 export default router;

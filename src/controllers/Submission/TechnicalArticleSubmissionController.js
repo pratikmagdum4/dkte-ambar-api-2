@@ -15,8 +15,17 @@ const s3 = new S3Client({
 
 const CreateTechArticleSubmission = async (req, res) => {
     console.log("hi i min tech ");
-  const { stdname, contact, email, prn, branch, year, title, content } =
-    req.body;
+  const {
+    stdname,
+    contact,
+    email,
+    prn,
+    branch,
+    year,
+    title,
+    content,
+    isVerified,
+  } = req.body;
   const selfImage = req.file.location;
 
   const newForm = new TechnicalSubmissionSchema({
@@ -29,6 +38,7 @@ const CreateTechArticleSubmission = async (req, res) => {
     title,
     content,
     selfImage,
+    isVerified,
   });
 
   try {
@@ -57,4 +67,44 @@ const getTechArticles = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-export { CreateTechArticleSubmission, getTechArticles };
+
+
+const UpdateTechArticleVerification = async (req, res) => {
+  const { id } = req.params;
+  const { isVerified } = req.body;
+
+  try {
+    const article = await TechnicalSubmissionSchema.findByIdAndUpdate(
+      id,
+      { isVerified },
+      { new: true }
+    );
+    if (!article) {
+      return res.status(404).json({ message: "Article not found" });
+    }
+    res.status(200).json(article);
+  } catch (error) {
+    res.status(500).json({ message: "Error updating article", error });
+  }
+};
+
+const getVerifiedTechArticle = async (req, res) => {
+  try {
+    console.log("here i m in teach")
+    const { language } = req.query;
+    const articles = await TechnicalSubmissionSchema.find({
+      isVerified: true,
+      language: language ? language : { $exists: true },
+    });
+    console.log("The articles are ",articles)
+    res.json(articles);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+export {
+  CreateTechArticleSubmission,
+  getTechArticles,
+  UpdateTechArticleVerification,
+  getVerifiedTechArticle,
+};

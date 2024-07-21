@@ -14,7 +14,17 @@ const s3 = new S3Client({
 });
 
 const CreateImageSubmission = async (req, res) => {
-  const { stdname, contact, email, prn, branch, year, title } = req.body;
+  const {
+    stdname,
+    contact,
+    email,
+    prn,
+    branch,
+    year,
+    title,
+    isVerified,
+    imageType,
+  } = req.body;
   const imageUrl = req.files["image"] ? req.files["image"][0].location : null;
   const selfImage = req.files["selfImage"]
     ? req.files["selfImage"][0].location
@@ -30,6 +40,8 @@ const CreateImageSubmission = async (req, res) => {
     title,
     imageUrl,
     selfImage,
+    isVerified,
+    imageType,
   });
 
   try {
@@ -73,7 +85,7 @@ const CreateImageSubmission = async (req, res) => {
 
 const getImgUploads = async (req, res) => {
   try {
-    console.log(" i mh erer")
+    
     const imgUploads = await ImageSubmissionSchema.find();
     res.json(imgUploads);
   } catch (error) {
@@ -81,5 +93,60 @@ const getImgUploads = async (req, res) => {
   }
 };
 
-export { CreateImageSubmission, getImgUploads };
+const getVerifiedImageByType = async (req, res) => {
+  try {
+    console.log("hi i mhere offcourse")
+    const { imageType } = req.query;
+    console.log("the image type is ", imageType);
+    const images = await ImageSubmissionSchema.find({
+      isVerified: true,
+      imageType: imageType ? imageType : { $exists: true },
+    });
+    console.log("the iamgesare ar",images);
+    res.json(images);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const UpdateImageVerification = async (req, res) => {
+  const { id } = req.params;
+  const { isVerified } = req.body;
+
+  try {
+    const article = await ImageSubmissionSchema.findByIdAndUpdate(
+      id,
+      { isVerified },
+      { new: true }
+    );
+    if (!article) {
+      return res.status(404).json({ message: "Article not found" });
+    }
+    res.status(200).json(article);
+  } catch (error) {
+    res.status(500).json({ message: "Error updating article", error });
+  }
+};
+
+// const getVerifiedImages = async (req, res) => {
+//   try {
+//     console.log("here i m in teach");
+//     const { language } = req.query;
+//     const articles = await TechnicalSubmissionSchema.find({
+//       isVerified: true,
+//       language: language ? language : { $exists: true },
+//     });
+//     console.log("The articles are ", articles);
+//     res.json(articles);
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// };
+export {
+  CreateImageSubmission,
+  getImgUploads,
+  getVerifiedImageByType,
+  UpdateImageVerification,
+  
+};
 

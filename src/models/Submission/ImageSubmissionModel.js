@@ -10,6 +10,8 @@ const imageSubmissionSchema = new mongoose.Schema({
   title: { type: String, default: "" },
   imageUrl: { type: String, default: "" },
   selfImage: { type: String, default: "" },
+  isVerified: { type: Boolean, default: false },
+  imageType: { type: String, default:""}
 });
 
 const ImageSubmissionSchema = mongoose.model(

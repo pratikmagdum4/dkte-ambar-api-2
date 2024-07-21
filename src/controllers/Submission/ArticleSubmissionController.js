@@ -14,7 +14,18 @@ const s3 = new S3Client({
 });
 
 const CreateArticleSubmission = async (req, res) => {
-  const { stdname, contact, email, prn, branch, year, title,content, } = req.body;
+  const {
+    stdname,
+    contact,
+    email,
+    prn,
+    branch,
+    year,
+    title,
+    content,
+    language,
+    isVerified,
+  } = req.body;
   const selfImage = req.file.location;
 
   const newForm = new ArticleSubmissionSchema({
@@ -27,6 +38,8 @@ const CreateArticleSubmission = async (req, res) => {
     title,
     content,
     selfImage,
+    language,
+    isVerified
   });
 
   try {
@@ -56,4 +69,39 @@ const getArticles = async (req, res) => {
      }
 }
 
-export { CreateArticleSubmission, getArticles };
+const UpdateArticleVerification = async (req, res) => {
+
+ const { id } = req.params;
+    const { isVerified } = req.body;
+  console.log("i m here ")
+    try {
+        const article = await ArticleSubmissionSchema.findByIdAndUpdate(id, { isVerified }, { new: true });
+        if (!article) {
+            return res.status(404).json({ message: 'Article not found' });
+        }
+        res.status(200).json(article);
+    } catch (error) {
+        res.status(500).json({ message: 'Error updating article', error });
+    }
+}
+
+const getVerifiedArticle = async (req, res) => {
+  try{
+    const {language} = req.query;
+    const articles = await ArticleSubmissionSchema.find({
+      isVerified:true,
+      language:language? language:{$exists:true}
+    });
+    res.json(articles);
+  }
+  catch(error){
+    res.status(500).json({message:error.message});
+  }
+}
+
+export {
+  CreateArticleSubmission,
+  getArticles,
+  UpdateArticleVerification,
+  getVerifiedArticle,
+};
