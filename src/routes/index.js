@@ -29,6 +29,11 @@ import {
  
 } from "../controllers/Submission/ArticleSubmissionController.js";
 import { CreateTechArticleSubmission, getTechArticles, getVerifiedTechArticle, UpdateTechArticleVerification } from "../controllers/Submission/TechnicalArticleSubmissionController.js";
+import ImageSubmissionSchema from "../models/Submission/ImageSubmissionModel.js";
+import FacultyAchievementPatentGrantSchema from "../models/FacultyAchievements/facultyAchievementPatentGrantModel.js";
+import FacultyAchievementBookPublicationSchema from "../models/FacultyAchievements/facultyAchievementBookPublicationModel.js";
+import FirstYearBtechEngineerinRoutes from "../routes/StudentAchievements/Courses/BtechEngineering/FirstYearBtechEngineeringRoutes.js";
+
 
 const router = Router();
 
@@ -133,6 +138,30 @@ router.use("/article/verify/:id", UpdateArticleVerification);
 router.use("/imgupload/verify/:id", UpdateImageVerification);
 router.use("/technical/verify/:id", UpdateTechArticleVerification);
 
+
+
+router.get("/progress", async (req, res) => {
+  try {
+   
+    const facultyAchievementPatentGrantCount =
+      await FacultyAchievementPatentGrantSchema.countDocuments();
+    const facultyAchievementBookPublicationCount =
+      await FacultyAchievementBookPublicationSchema.countDocuments();
+    
+
+    res.json({
+      facultyAchievementPatentGrantCount: facultyAchievementPatentGrantCount,
+      facultyAchievementBookPublicationCount:
+        facultyAchievementBookPublicationCount,
+      // Add other models similarly
+    });
+  } catch (error) {
+    res.status(500).send("Error fetching progress data");
+  }
+});
+
+
+router.use("/first/btech", FirstYearBtechEngineerinRoutes);
 
 
 export default router;
