@@ -1,4 +1,5 @@
 import { Router } from "express";
+import dotenv from "dotenv";
 import facultyAchievementBookPublicationRoutes from "./FacultyAchievements/facultyAchievementBookPublicationRoutes.js";
 import facultyAchievementPaperPublicationRoutes from "./FacultyAchievements/facultyAchievementPaperPublicationRoutes.js";
 import facultyAchievementOtherSpecialRoutes from "./FacultyAchievements/facultyAchievementOtherSpecialRoutes.js";
@@ -16,10 +17,15 @@ import MainEvents from "./MainEvents/MainEventsRoutes.js";
 import SponsorList from "./SponsorsList/SponsorsListRoutes.js";
 import UpGraduation from "./UpGraduation/UpGraduationRoutes.js";
 import ImageSubmissionRouter from "./Submission/ImageSubmissionRoutes.js";
-import { CreateImageSubmission } from "../controllers/Submission/ImageSubmissionController.js";
+import { CreateImageSubmission, getImgUploads } from "../controllers/Submission/ImageSubmissionController.js";
 import multer from "multer";
 import multerS3 from "multer-s3";
 import { S3Client } from "@aws-sdk/client-s3";
+import {
+  CreateArticleSubmission,
+  getArticles,
+} from "../controllers/Submission/ArticleSubmissionController.js";
+import { CreateTechArticleSubmission, getTechArticles } from "../controllers/Submission/TechnicalArticleSubmissionController.js";
 
 const router = Router();
 
@@ -37,6 +43,7 @@ const upload = multer({
     s3: s3,
     bucket: process.env.AWS_BUCKET_NAME,
     acl: "private",
+    contentType: multerS3.AUTO_CONTENT_TYPE, // Automatically set the correct content type
     key: function (req, file, cb) {
       cb(null, Date.now().toString() + file.originalname);
     },
@@ -98,6 +105,20 @@ router.use(
     { name: "selfImage", maxCount: 1 },
   ]),
   CreateImageSubmission
+);
+
+router.use(
+  "/submit/article",
+  upload.single("selfImage"),
+  CreateArticleSubmission
+);
+router.use("/article/get", getArticles);
+router.use("/technical/get", getTechArticles);
+router.use("/imgupload/get", getImgUploads);
+router.use(
+  "/submit/technical",
+  upload.single("selfImage"),
+  CreateTechArticleSubmission
 );
 
 export default router;

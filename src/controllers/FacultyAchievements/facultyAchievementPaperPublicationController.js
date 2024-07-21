@@ -2,7 +2,6 @@ import FacultyAchievementPaperPublicationSchema from "../../models/FacultyAchiev
 
 const createFacultyAchievementPaperPublication = async (req, res) => {
   try {
-    console.log("hi i m in paper controller");
     const achievementsArray = req.body;
 
     const savedAchievements = [];

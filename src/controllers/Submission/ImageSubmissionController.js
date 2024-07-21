@@ -70,4 +70,16 @@ const CreateImageSubmission = async (req, res) => {
   }
 };
 
-export { CreateImageSubmission };
+
+const getImgUploads = async (req, res) => {
+  try {
+    console.log(" i mh erer")
+    const imgUploads = await ImageSubmissionSchema.find();
+    res.json(imgUploads);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export { CreateImageSubmission, getImgUploads };
+
