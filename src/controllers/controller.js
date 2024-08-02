@@ -3,11 +3,18 @@ const createAchievement = async (Model, req, res) => {
     const achievementsArray = req.body;
     const savedAchievements = [];
     for (const achievement of achievementsArray) {
-      const { srno, info } = achievement;
-      let existingAchievement = await Model.findOne({ srno, info });
-      if (existingAchievement) {
+      const { _id, srno, info } = achievement;
+
+      if (_id) {
+        // If _id is present, try to update the existing achievement
+        let existingAchievement = await Model.findByIdAndUpdate(
+          _id,
+          { srno, info },
+          { new: true }
+        );
         savedAchievements.push(existingAchievement);
       } else {
+        // If _id is not present, create a new achievement
         const newAchievement = new Model({ srno, info });
         const savedAchievement = await newAchievement.save();
         savedAchievements.push(savedAchievement);
@@ -63,4 +70,9 @@ const updateAchievement = async (Model, req, res) => {
   }
 };
 
-export { createAchievement, getAchievements, deleteAchievement, updateAchievement };
+export {
+  createAchievement,
+  getAchievements,
+  deleteAchievement,
+  updateAchievement,
+};

@@ -50,6 +50,8 @@ const CreateArticleSubmission = async (req, res) => {
       Bucket: process.env.AWS_BUCKET_NAME,
       Key: req.file.key,
     });
+
+    
     const signedUrl = await getSignedUrl(s3, command, { expiresIn: 3600 }); // URL expires in 1 hour
 
     res

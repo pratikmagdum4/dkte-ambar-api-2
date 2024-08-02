@@ -1,13 +1,29 @@
 import mongoose from "mongoose";
 
-const fourthYearBtechTextileSchema = new mongoose.Schema({
-  rank: { type: String, default: "" },
-  stdname: { type: String, default: "" },
-  cgpa: { type: String, default: "" },
+const { Schema } = mongoose;
+
+const fourthYearBtechTextileSchema = new Schema({
+  rank: {
+    type: Number,
+    required: false,
+  },
+  stdname: {
+    type: String,
+    required: false,
+  },
+  cgpa: {
+    type: String,
+    required: false,
+  },
+  dept: {
+    type: String,
+    required: true,
+  },
 });
 
 const FourthYearBtechTextileModel = mongoose.model(
-  "FirstYearBtechTextileModel",
+  "FourthYearBtechTextileModel",
   fourthYearBtechTextileSchema
 );
+
 export default FourthYearBtechTextileModel;

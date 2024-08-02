@@ -32,7 +32,8 @@ import { CreateTechArticleSubmission, getTechArticles, getVerifiedTechArticle, U
 import ImageSubmissionSchema from "../models/Submission/ImageSubmissionModel.js";
 import FacultyAchievementPatentGrantSchema from "../models/FacultyAchievements/facultyAchievementPatentGrantModel.js";
 import FacultyAchievementBookPublicationSchema from "../models/FacultyAchievements/facultyAchievementBookPublicationModel.js";
-import FirstYearBtechEngineerinRoutes from "../routes/StudentAchievements/Courses/BtechEngineering/FirstYearBtechEngineeringRoutes.js";
+
+import BtechCgpa from "../routes/StudentAchievements/Courses/BtechEngineering/BtechCgpaRoutes.js";
 
 
 const router = Router();
@@ -161,7 +162,9 @@ router.get("/progress", async (req, res) => {
 });
 
 
-router.use("/first/btech", FirstYearBtechEngineerinRoutes);
 
+router.use("/btechcgpa", BtechCgpa);
+// router.use("/first/btech", FirstYearBtechEngineerinRoutes);
+// router.use("/fybtech", FirstYearBtechEngineeringRoutes);
 
 export default router;

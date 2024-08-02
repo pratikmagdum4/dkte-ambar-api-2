@@ -1,21 +1,26 @@
 import mongoose from "mongoose";
 
-// Schema for a student entry
-const studentSchema = new mongoose.Schema({
-  rank: { type: Number, required: true },
-  name: { type: String, default: "" },
-  cgpa: { type: String, default: "" },
-});
 
-// Schema for a department containing an array of student entries
-const departmentSchema = new mongoose.Schema({
-  departmentName: { type: String, required: true },
-  students: [studentSchema],
-});
+const { Schema } = mongoose;
 
-// Main schema for storing all departments' data
-const firstYearBtechEngineeringSchema = new mongoose.Schema({
-  departments: [departmentSchema],
+const firstYearBtechEngineeringSchema = new Schema({
+  rank: {
+    type: Number,
+    required: false,
+  },
+  stdname: {
+    type: String,
+    required: false,
+  },
+  cgpa: {
+    type: String,
+    required: false,
+    
+  },
+  dept: {
+    type: String,
+    required: true,
+  },
 });
 
 const FirstYearBtechEngineeringModel = mongoose.model(
@@ -24,3 +29,4 @@ const FirstYearBtechEngineeringModel = mongoose.model(
 );
 
 export default FirstYearBtechEngineeringModel;
+

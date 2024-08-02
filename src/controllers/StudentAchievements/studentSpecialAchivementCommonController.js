@@ -25,12 +25,18 @@ const createStudentAchievementSpecialAchievements = async (
 
     const savedAchievements = [];
     for (const achievement of achievementsArray) {
-      const { srno, name, Class } = achievement;
+      const { _id, srno, name, Class } = achievement;
 
-      let existingAchievement = await schema.findOne({ srno, name, Class });
-      if (existingAchievement) {
-        savedAchievements.push(existingAchievement);
+      if (_id) {
+        // Update existing achievement if _id is provided
+        let updatedAchievement = await schema.findByIdAndUpdate(
+          _id,
+          { srno, name, Class },
+          { new: true }
+        );
+        savedAchievements.push(updatedAchievement);
       } else {
+        // Create a new achievement if _id is not provided
         const newAchievement = new schema({ srno, name, Class });
         const savedAchievement = await newAchievement.save();
         savedAchievements.push(savedAchievement);
@@ -94,12 +100,10 @@ const updateStudentAchievementSpecialAchievements = async (
     if (!updatedAchievement) {
       return res.status(404).json({ message: "Achievement not found" });
     }
-    res
-      .status(200)
-      .json({
-        message: "Achievement updated successfully",
-        updatedAchievement,
-      });
+    res.status(200).json({
+      message: "Achievement updated successfully",
+      updatedAchievement,
+    });
   } catch (error) {
     res.status(500).json({ message: "Error updating achievement" });
   }
