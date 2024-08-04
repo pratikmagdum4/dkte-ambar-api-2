@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
-const firstYearBtechTextileSchema = new Schema({
+const secondYearDiplomaSchema = new Schema({
   rank: {
     type: Number,
     required: false,
@@ -21,9 +21,9 @@ const firstYearBtechTextileSchema = new Schema({
   },
 });
 
-const FirstYearBtechTextileModel = mongoose.model(
-  "FirstYearBtechTextileModel",
-  firstYearBtechTextileSchema
+const SecondYearDiplomaModel = mongoose.model(
+  "SecondYearDiplomaModel",
+  secondYearDiplomaSchema
 );
 
-export default FirstYearBtechTextileModel;
+export default SecondYearDiplomaModel;

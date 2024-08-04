@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
-const { Schema } = mongoose;
+const mbaSchema = new mongoose.Schema({
 
-const thirdYearBtechTextileSchema = new Schema({
+
   rank: {
     type: Number,
     required: false,
@@ -11,6 +11,9 @@ const thirdYearBtechTextileSchema = new Schema({
     type: String,
     required: false,
   },
+
+
+
   cgpa: {
     type: String,
     required: false,
@@ -19,11 +22,9 @@ const thirdYearBtechTextileSchema = new Schema({
     type: String,
     required: true,
   },
+
+
 });
 
-const ThirdYearBtechTextileModel = mongoose.model(
-  "ThirdYearBtechTextileModel",
-  thirdYearBtechTextileSchema
-);
-
-export default ThirdYearBtechTextileModel;
+const MBAModel = mongoose.model("MBAModel", mbaSchema);
+export default MBAModel;

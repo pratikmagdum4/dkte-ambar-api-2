@@ -12,4 +12,6 @@ const FacultyAchievementBookPublicationSchema = mongoose.model(
   "FacultyAchievementBookPublicationSchema",
   facultyAchievementBookPublicationSchema
 );
+
+
 export default FacultyAchievementBookPublicationSchema;

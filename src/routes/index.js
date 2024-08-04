@@ -34,6 +34,22 @@ import FacultyAchievementPatentGrantSchema from "../models/FacultyAchievements/f
 import FacultyAchievementBookPublicationSchema from "../models/FacultyAchievements/facultyAchievementBookPublicationModel.js";
 
 import BtechCgpa from "../routes/StudentAchievements/Courses/BtechEngineering/BtechCgpaRoutes.js";
+import BtechTextileCgpa from "../routes/StudentAchievements/Courses/BtechTextile/BtechCgpaTextileRoutes.js";
+import DiplomaCgpa from "../routes/StudentAchievements/Courses/Diploma/DiplomaRoutes.js";
+import MbaCgpa from "../routes/StudentAchievements/Courses/MBA/MbaRoutes.js";
+
+
+import EngineeringCompanies from "../routes/TrainingPlacement/EngineeringCompanies/EngineeringCompaniesRoutes.js";
+import EngineeringPlacementComapaniesDepartments from "../routes/TrainingPlacement/EngineeringPlacement/EngineeringPlacementComapaniesDepartmentsRoutes.js";
+import EngineeringPlacementComapaniesIndustrialTraining from "../routes/TrainingPlacement/EngineeringPlacement/EngineeringPlacementComapaniesIndustrialTrainingRoutes.js";
+import EngineeringPlacementComapaniesPackageOffered from "../routes/TrainingPlacement/EngineeringPlacement/EngineeringPlacementComapaniesPackageOfferedRoutes.js";
+import TextileCompaniesInternational from "../routes/TrainingPlacement/TextileCompanies/TextileCompaniesInternationalRoutes.js";
+import TextileCompaniesNational from "../routes/TrainingPlacement/TextileCompanies/TextileCompaniesNationalRoutes.js";
+import TextilePlacementDepartments from "../routes/TrainingPlacement/TextilePlacement/TextilePlacementDepartmentsRoutes.js";
+import TextilePlacementIndustrialTraining from "../routes/TrainingPlacement/TextilePlacement/TextilePlacementIndustrialTrainingRoutes.js";
+import TextilePlacementInternationalPlacement from "../routes/TrainingPlacement/TextilePlacement/TextilePlacementInternationalPlacementRoutes.js";
+import TextilePlacementPackageOffered from "../routes/TrainingPlacement/TextilePlacement/TextilePlacementPackageOfferedRoutes.js";
+
 
 
 const router = Router();
@@ -164,7 +180,35 @@ router.get("/progress", async (req, res) => {
 
 
 router.use("/btechcgpa", BtechCgpa);
-// router.use("/first/btech", FirstYearBtechEngineerinRoutes);
-// router.use("/fybtech", FirstYearBtechEngineeringRoutes);
+router.use("/btechtextcgpa", BtechTextileCgpa);
+router.use("/diploma", DiplomaCgpa);
+router.use("/mba", MbaCgpa);
+
+router.use("/engineering/companies", EngineeringCompanies);
+router.use(
+  "/engineering/placement/departments",
+  EngineeringPlacementComapaniesDepartments
+);
+router.use(
+  "/engineering/placement/industrialtraining",
+  EngineeringPlacementComapaniesIndustrialTraining
+);
+router.use(
+  "/engineering/placement/packageoffered",
+  EngineeringPlacementComapaniesPackageOffered
+);
+router.use("/textile/companies/international", TextileCompaniesInternational);
+router.use("/textile/companies/national", TextileCompaniesNational);
+router.use("/textile/placement/departments", TextilePlacementDepartments);
+router.use(
+  "/textile/placement/industrialtraining",
+  TextilePlacementIndustrialTraining
+);
+router.use(
+  "/textile/placement/international",
+  TextilePlacementInternationalPlacement
+);
+router.use("/textile/placement/packageoffered", TextilePlacementPackageOffered);
+
 
 export default router;
