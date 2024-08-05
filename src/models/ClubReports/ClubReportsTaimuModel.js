@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const clubReportsTaimuSchema = new mongoose.Schema({
-  srno: { type: String, default: "" },
+  // srno: { type: String, default: "" },
   info: { type: String, default: "" },
 });
 

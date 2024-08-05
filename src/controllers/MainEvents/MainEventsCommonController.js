@@ -29,12 +29,12 @@ const createMainEvent = async (req, res, eventName) => {
     const savedAchievements = [];
 
     for (const achievement of achievementsArray) {
-      const { _id,srno, info } = achievement;
+      const { _id, info } = achievement;
 
       if (_id) {
         let existingAchievement = await schema.findByIdAndUpdate(
           _id,
-          { srno, info },
+          {  info },
           { new: true }
         );
         savedAchievements.push(existingAchievement);
@@ -89,7 +89,7 @@ const deleteMainEvent = async (req, res, eventName) => {
 
 const updateMainEvent = async (req, res, eventName) => {
   const { id } = req.params;
-  const { srno, info } = req.body;
+  const {  info } = req.body;
   try {
     const schema = getSchema(eventName);
     if (!schema) {
@@ -98,7 +98,7 @@ const updateMainEvent = async (req, res, eventName) => {
 
     const updatedAchievement = await schema.findByIdAndUpdate(
       id,
-      { srno, info },
+      { info },
       { new: true }
     );
 
