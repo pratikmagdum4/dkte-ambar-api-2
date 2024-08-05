@@ -55,6 +55,10 @@ import StaffMembersCount from "../routes/StaffMembers/StaffMembersCountRoutes.js
 import StaffMembersList from "../routes/StaffMembers/StaffMembersListRoutes.js";
 
 import AdminNotification from "../routes/Notification/AdminNotificationRoutes.js";
+import FirstYearDiplomaModel from "../models/StudentAchievements/Courses/Diploma/DiplomaFirstYearModel.js";
+import SecondYearDiplomaModel from "../models/StudentAchievements/Courses/Diploma/DiplomaSecondYearModel.js";
+import ThirdYearDiplomaModel from "../models/StudentAchievements/Courses/Diploma/DiplomaThirdYearModel.js";
+import MBAModel from "../models/StudentAchievements/Courses/MBA/MBAModel.js";
 
 const router = Router();
 
@@ -169,7 +173,9 @@ router.use("/technical/verify/:id", UpdateTechArticleVerification);
 
 router.get("/progress", async (req, res) => {
   try {
-   
+   const DiplomaClerk = await FirstYearDiplomaModel.countDocuments() + await SecondYearDiplomaModel.countDocuments() + await ThirdYearDiplomaModel.countDocuments() ;
+
+   const MBAClerk = await MBAModel.countDocuments() ;
     const facultyAchievementPatentGrantCount =
       await FacultyAchievementPatentGrantSchema.countDocuments();
     const facultyAchievementBookPublicationCount =
@@ -177,6 +183,8 @@ router.get("/progress", async (req, res) => {
     
 
     res.json({
+      DiplomaClerk:DiplomaClerk,
+      MBAClerk:MBAClerk,
       facultyAchievementPatentGrantCount: facultyAchievementPatentGrantCount,
       facultyAchievementBookPublicationCount:
         facultyAchievementBookPublicationCount,
