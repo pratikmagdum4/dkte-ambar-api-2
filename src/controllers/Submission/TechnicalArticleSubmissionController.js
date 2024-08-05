@@ -14,19 +14,16 @@ const s3 = new S3Client({
 });
 
 const CreateTechArticleSubmission = async (req, res) => {
-    console.log("hi i min tech ");
-  const {
-    stdname,
-    contact,
-    email,
-    prn,
-    branch,
-    year,
-    title,
-    content,
-    isVerified,
-  } = req.body;
-  const selfImage = req.file.location;
+  console.log("hi i m in tech ");
+  const { stdname, contact, email, prn, branch, year, title, isVerified } =
+    req.body;
+
+  const content = req.files["content"]
+    ? req.files["content"][0].location
+    : null;
+  const selfImage = req.files["selfImage"]
+    ? req.files["selfImage"][0].location
+    : null;
 
   const newForm = new TechnicalSubmissionSchema({
     stdname,
@@ -44,16 +41,28 @@ const CreateTechArticleSubmission = async (req, res) => {
   try {
     await newForm.save();
 
-    // Generate a signed URL for the uploaded image
-    const command = new GetObjectCommand({
+    const contentCommand = new GetObjectCommand({
       Bucket: process.env.AWS_BUCKET_NAME,
-      Key: req.file.key,
+      Key: req.files["content"][0].key,
     });
-    const signedUrl = await getSignedUrl(s3, command, { expiresIn: 3600 }); // URL expires in 1 hour
+    const contentSignedUrl = await getSignedUrl(s3, contentCommand, {
+      expiresIn: 3600,
+    });
 
-    res
-      .status(200)
-      .json({ message: "Form submitted successfully", newForm, signedUrl });
+    const selfImageCommand = new GetObjectCommand({
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: req.files["selfImage"][0].key,
+    });
+    const selfImageSignedUrl = await getSignedUrl(s3, selfImageCommand, {
+      expiresIn: 3600,
+    });
+
+    res.status(200).json({
+      message: "Form submitted successfully",
+      newForm,
+      contentSignedUrl,
+      selfImageSignedUrl,
+    });
   } catch (error) {
     res.status(500).json({ message: "Error submitting form", error });
   }
@@ -67,7 +76,6 @@ const getTechArticles = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
 
 const UpdateTechArticleVerification = async (req, res) => {
   const { id } = req.params;
@@ -90,18 +98,19 @@ const UpdateTechArticleVerification = async (req, res) => {
 
 const getVerifiedTechArticle = async (req, res) => {
   try {
-    console.log("here i m in teach")
+    console.log("here i m in tech");
     const { language } = req.query;
     const articles = await TechnicalSubmissionSchema.find({
       isVerified: true,
       language: language ? language : { $exists: true },
     });
-    console.log("The articles are ",articles)
+    console.log("The articles are ", articles);
     res.json(articles);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
 export {
   CreateTechArticleSubmission,
   getTechArticles,

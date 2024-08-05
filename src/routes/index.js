@@ -136,7 +136,10 @@ router.use(
 
 router.use(
   "/submit/article",
-  upload.single("selfImage"),
+  upload.fields([
+    { name: "content", maxCount: 1 },
+    { name: "selfImage", maxCount: 1 },
+  ]),
   CreateArticleSubmission
 );
 router.use("/article/get", getArticles);
@@ -148,7 +151,10 @@ router.use("/technical/get", getTechArticles);
 router.use("/imgupload/get", getImgUploads);
 router.use(
   "/submit/technical",
-  upload.single("selfImage"),
+  upload.fields([
+    { name: "content", maxCount: 1 },
+    { name: "selfImage", maxCount: 1 },
+  ]),
   CreateTechArticleSubmission
 );
 
