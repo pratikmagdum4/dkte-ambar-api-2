@@ -3,10 +3,6 @@ import {createTextilePlacementInternationalPlacement,
   deleteTextilePlacementInternationalPlacement,
   updateTextilePlacementInternationalPlacement,}from "../../../controllers/TrainingPlacement/TextilePlacement/TextilePlacementInternationalPlacementController.js";
 
-
-
-
-
   
 import express from "express";
 

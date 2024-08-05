@@ -1,7 +1,7 @@
 import { createTextileCompaniesInternational,
   getTextileCompaniesInternational,
   deleteTextileCompaniesInternational,
-  updateTextileCompaniesInternational,}from "../../../controllers/TrainingPlacement/TextileCompanies/TextileCompaniesInterNationalController.js";
+  updateTextileCompaniesInternational,}from "../../../controllers/TrainingPlacement/TextileCompanies/TextileCompaniesInternationalController.js";
 
   import express from "express";
 
