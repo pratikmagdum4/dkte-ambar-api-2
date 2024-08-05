@@ -17,7 +17,7 @@ const secondYearBtechEngineeringModel = new Schema({
   },
   dept: {
     type: String,
-    required: true,
+    required: false,
   },
 });
 
