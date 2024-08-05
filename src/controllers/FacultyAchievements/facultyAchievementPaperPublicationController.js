@@ -6,25 +6,27 @@ const createFacultyAchievementPaperPublication = async (req, res) => {
 
     const savedAchievements = [];
     for (const achievement of achievementsArray) {
-      const { srno, info } = achievement;
+      const {_id, srno, info } = achievement;
 
-      let existingAchievement =
-        await FacultyAchievementPaperPublicationSchema.findOne({
-          srno,
-          info,
-        });
-      if (existingAchievement) {
-        savedAchievements.push(existingAchievement);
-      } else {
-        // Create a new achievement document
-        const newAchievement = new FacultyAchievementPaperPublicationSchema({
-          srno,
-          info,
-        });
-        // Save the new achievement
-        const savedAchievement = await newAchievement.save();
-        savedAchievements.push(savedAchievement);
-      }
+       if (_id) {
+         let existingAchievement =
+           await FacultyAchievementPaperPublicationSchema.findByIdAndUpdate(
+             _id,
+             { srno, info },
+             { new: true }
+           );
+
+         savedAchievements.push(existingAchievement);
+       } else {
+         // Create a new achievement document
+         const newAchievement = new FacultyAchievementPaperPublicationSchema({
+           srno,
+           info,
+         });
+         // Save the new achievement
+         const savedAchievement = await newAchievement.save();
+         savedAchievements.push(savedAchievement);
+       }
     }
     // Send response
     res.status(200).send(savedAchievements);

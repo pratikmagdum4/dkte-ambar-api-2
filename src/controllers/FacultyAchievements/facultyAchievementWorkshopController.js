@@ -6,24 +6,26 @@ const createFacultyAchievementWorkshop = async (req, res) => {
     const savedAchievements = [];
 
     for (const achievement of achievementArray) {
-      const { name, workshopname } = achievement;
+      const { _id,name, workshopname } = achievement;
 
-      let existingAchievement = await FacultyAchievementWorkshopSchema.findOne({
-        name,
-        workshopname,
-      });
+       if (_id) {
+         let existingAchievement =
+           await FacultyAchievementWorkshopSchema.findByIdAndUpdate(
+             _id,
+             { name, workshopname },
+             { new: true }
+           );
 
-      if (existingAchievement) {
-        savedAchievements.push(existingAchievement);
-      } else {
-        const newAchievement = new FacultyAchievementWorkshopSchema({
-          name,
-          workshopname,
-        });
+         savedAchievements.push(existingAchievement);
+       } else {
+         const newAchievement = new FacultyAchievementWorkshopSchema({
+           name,
+           workshopname,
+         });
 
-        const savedAchievement = await newAchievement.save();
-        savedAchievements.push(savedAchievement);
-      }
+         const savedAchievement = await newAchievement.save();
+         savedAchievements.push(savedAchievement);
+       }
     }
 
     res.status(200).send(savedAchievements);

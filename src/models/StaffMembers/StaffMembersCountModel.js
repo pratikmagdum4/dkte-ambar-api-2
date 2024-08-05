@@ -1,14 +1,14 @@
 import mongoose from "mongoose";
 
 const staffMembersCountSchema = new mongoose.Schema({
-  ugpgmba: { type: String, default: "" },
-  count: { type: String, default: "" },
+  namecat: { type: String, default: "" },
+  positioncount: { type: String, default: "" },
 });
 
-const StaffMembersCountSchema = mongoose.model(
-  "StaffMembersCountSchema",
+const StaffMembersCountModel = mongoose.model(
+  "StaffMembersCountModel",
   staffMembersCountSchema
 );
 
 
-export default StaffMembersCountSchema;
+export default StaffMembersCountModel;

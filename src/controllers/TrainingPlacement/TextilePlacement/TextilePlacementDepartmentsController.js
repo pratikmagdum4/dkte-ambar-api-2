@@ -6,34 +6,41 @@ const createTextilePlacementDepartments = async (req, res) => {
     const savedAchievements = [];
     for (const achievement of achievementArray) {
       const {
+        _id,
         srno,
         branch,
         studentforcampus,
         recruitedstd,
         placementpercentage,
       } = achievement;
-      let existingAchievement = await TextilePlacementDepartmentModel.findOne({
+     if (_id) {
+       let existingAchievement =
+         await TextilePlacementDepartmentModel.findByIdAndUpdate(
+           _id,
+           {
+             srno,
+             branch,
+             studentforcampus,
+             recruitedstd,
+             placementpercentage,
+           },
+           { new: true }
+         );
+
+       savedAchievements.push(existingAchievement);
+     } else {
+       //create new
+       const newAchievement = new TextilePlacementDepartmentModel({
          srno,
-        branch,
-        studentforcampus,
-        recruitedstd,
-        placementpercentage
-      });
-      if (existingAchievement) {
-        savedAchievements.push(existingAchievement);
-      } else {
-        //create new
-        const newAchievement = new TextilePlacementDepartmentModel({
-          srno,
-          branch,
-          studentforcampus,
-          recruitedstd,
-          placementpercentage,
-        });
-        //save
-        const savedAchievement = await newAchievement.save();
-        savedAchievements.push(savedAchievement);
-      }
+         branch,
+         studentforcampus,
+         recruitedstd,
+         placementpercentage,
+       });
+       //save
+       const savedAchievement = await newAchievement.save();
+       savedAchievements.push(savedAchievement);
+     }
     }
     res.status(200).send(savedAchievements);
   } catch (error) {

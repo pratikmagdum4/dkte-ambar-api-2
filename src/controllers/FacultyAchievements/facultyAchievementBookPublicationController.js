@@ -7,30 +7,29 @@ const createFacultyAchievementBookPublication = async (req, res) => {
 
     const savedAchievements = [];
     for (const achievement of achievementsArray) {
-      const { name, title, agency, isbnno, chapter } = achievement;
+      const {_id, name, title, agency, isbnno, chapter } = achievement;
 
-      let existingAchievement = await FacultyAchievement.findOne({
-        name,
-        title,
-        agency,
-        isbnno,
-        chapter,
-      });
-      if (existingAchievement) {
-        savedAchievements.push(existingAchievement);
-      } else {
-        // Create a new achievement document
-        const newAchievement = new FacultyAchievement({
-          name,
-          title,
-          agency,
-          isbnno,
-          chapter,
-        });
-        // Save the new achievement
-        const savedAchievement = await newAchievement.save();
-        savedAchievements.push(savedAchievement);
-      }
+       if (_id) {
+         let existingAchievement = await FacultyAchievement.findByIdAndUpdate(
+           _id,
+           { name, title, agency, isbnno, chapter },
+           { new: true }
+         );
+
+         savedAchievements.push(existingAchievement);
+       } else {
+         // Create a new achievement document
+         const newAchievement = new FacultyAchievement({
+           name,
+           title,
+           agency,
+           isbnno,
+           chapter,
+         });
+         // Save the new achievement
+         const savedAchievement = await newAchievement.save();
+         savedAchievements.push(savedAchievement);
+       }
     }
     // Send response
     res.status(200).send(savedAchievements);

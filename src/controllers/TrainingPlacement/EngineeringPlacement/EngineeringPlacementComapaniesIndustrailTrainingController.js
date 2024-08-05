@@ -5,15 +5,19 @@ const createEngineeringCompaniesIndustrialTraining = async (req, res) => {
     const achievementArray = req.body;
     const savedAchievements = [];
     for (const achievement of achievementArray) {
-      const { category, studentcount } =
+      const { _id,category, studentcount } =
         achievement;
+      if(_id)
+     {
       let existingAchievement =
-        await EngineeringCompaniesIndustrialTrainingModel.findOne({
-          category,
-          studentcount,
-        });
-      if (existingAchievement) {
-        savedAchievements.push(existingAchievement);
+        await EngineeringCompaniesIndustrialTrainingModel.findByIdAndUpdate(
+          _id,
+          { category, studentcount },
+          { new: true }
+        );
+      
+      savedAchievements.push(existingAchievement);
+    
       } else {
         //create new
         const newAchievement = new EngineeringCompaniesIndustrialTrainingModel({

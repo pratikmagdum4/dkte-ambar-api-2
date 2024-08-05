@@ -6,15 +6,16 @@ const createFacultyAchievementTrainingProgrammes = async (req, res) => {
     const savedAchievements = [];
 
     for (const achievement of achievementArray) {
-      const { name, training } = achievement;
+      const {_id, name, training } = achievement;
 
-      let existingAchievement =
-        await FacultyAchievementTrainingProgrammesSchema.findOne({
-          name,
-          training,
-        });
+      if (_id) {
+        let existingAchievement =
+          await FacultyAchievementTrainingProgrammesSchema.findByIdAndUpdate(
+            _id,
+            { name, training },
+            { new: true }
+          );
 
-      if (existingAchievement) {
         savedAchievements.push(existingAchievement);
       } else {
         const newAchievement = new FacultyAchievementTrainingProgrammesSchema({

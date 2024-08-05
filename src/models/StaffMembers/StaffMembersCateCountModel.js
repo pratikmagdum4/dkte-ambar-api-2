@@ -5,9 +5,9 @@ const staffMembersCateCountSchema = new mongoose.Schema({
   count: { type: String, default: "" },
 });
 
-const StaffMembersCateCountSchema = mongoose.model(
-  "StaffMembersCateCountSchema",
+const StaffMembersCateCountModel = mongoose.model(
+  "StaffMembersCateCountModel",
   staffMembersCateCountSchema
 );
 
-export default StaffMembersCateCountSchema;
+export default StaffMembersCateCountModel;

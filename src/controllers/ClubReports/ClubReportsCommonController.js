@@ -33,16 +33,20 @@ const createClubReports = async (req, res, clubName) => {
     const savedAchievements = [];
 
     for (const achievement of achievementsArray) {
-      const { srno, info } = achievement;
+      const {_id, srno, info } = achievement;
 
-      let existingAchievement = await schema.findOne({ srno, info });
-      if (existingAchievement) {
-        savedAchievements.push(existingAchievement);
-      } else {
-        const newAchievement = new schema({ srno, info });
-        const savedAchievement = await newAchievement.save();
-        savedAchievements.push(savedAchievement);
-      }
+     if (_id) {
+       let existingAchievement = await schema.findByIdAndUpdate(
+         _id,
+         { srno, info },
+         { new: true }
+       );
+       savedAchievements.push(existingAchievement);
+     } else {
+       const newAchievement = new schema({ srno, info });
+       const savedAchievement = await newAchievement.save();
+       savedAchievements.push(savedAchievement);
+     }
     }
 
     res.status(200).send(savedAchievements);

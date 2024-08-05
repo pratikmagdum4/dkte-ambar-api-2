@@ -1,28 +1,28 @@
-import EngineeringCompaniesModel from "../../../models/TrainingPlacement/EngineeringCompanies/EngineeringCompaniesModel.js";
+import StaffMembersCateCountModel from "../../models/StaffMembers/StaffMembersCateCountModel.js";
 
-const createEngineeringCompanies = async (req, res) => {
+
+const createStaffMembersCateCount = async (req, res) => {
   try {
-    
     const achievementArray = req.body;
     const savedAchievements = [];
 
     for (const achievement of achievementArray) {
-      const { _id,engineeringcompanies } = achievement;
-       let existingAchievement;
-      
-    if(_id)
-     {
-      existingAchievement = await EngineeringCompaniesModel.findByIdAndUpdate(
-        _id,
-        { engineeringcompanies },
-        { new: true }
-      );
-      savedAchievements.push(existingAchievement);
-    }
-   else {
+      const { _id, ugpgmba, count } = achievement;
+      let existingAchievement;
+
+      if (_id) {
+        existingAchievement =
+          await StaffMembersCateCountModel.findByIdAndUpdate(
+            _id,
+            { ugpgmba, count },
+            { new: true }
+          );
+        savedAchievements.push(existingAchievement);
+      } else {
         // Create new achievement
-        const newAchievement = new EngineeringCompaniesModel({
-          engineeringcompanies,
+        const newAchievement = new StaffMembersCateCountModel({
+          ugpgmba,
+          count,
         });
         const savedAchievement = await newAchievement.save();
         savedAchievements.push(savedAchievement);
@@ -36,19 +36,19 @@ const createEngineeringCompanies = async (req, res) => {
   }
 };
 
-const getEngineeringCompanies = async (req, res) => {
+const getStaffMembersCateCount = async (req, res) => {
   try {
-    const achievement = await EngineeringCompaniesModel.find();
+    const achievement = await StaffMembersCateCountModel.find();
     res.status(200).send(achievement);
   } catch (error) {
     res.status(400).send(error);
   }
 };
 
-const deleteEngineeringCompanies = async (req, res) => {
+const deleteStaffMembersCateCount = async (req, res) => {
   const { id } = req.params;
   try {
-    const achievement = await EngineeringCompaniesModel.findByIdAndDelete(id);
+    const achievement = await StaffMembersCateCountModel.findByIdAndDelete(id);
     if (!achievement) {
       return res.status(404).json({ message: "Achievement not found" });
     }
@@ -58,15 +58,15 @@ const deleteEngineeringCompanies = async (req, res) => {
   }
 };
 
-const updateEngineeringCompanies = async (req, res) => {
+const updateStaffMembersCateCount = async (req, res) => {
   const { id } = req.params;
-  const { engineeringcompanies } = req.body;
+  const { ugpgmba, count } = req.body;
 
   try {
     const updatedAchievement =
-      await EngineeringCompaniesModel.findByIdAndUpdate(
+      await StaffMembersCateCountModel.findByIdAndUpdate(
         id,
-        { engineeringcompanies },
+        { ugpgmba, count },
         { new: true }
       );
     if (!updatedAchievement) {
@@ -81,9 +81,11 @@ const updateEngineeringCompanies = async (req, res) => {
   }
 };
 
+
+
 export {
-  createEngineeringCompanies,
-  getEngineeringCompanies,
-  deleteEngineeringCompanies,
-  updateEngineeringCompanies,
+  createStaffMembersCateCount,
+  getStaffMembersCateCount,
+  deleteStaffMembersCateCount,
+  updateStaffMembersCateCount,
 };

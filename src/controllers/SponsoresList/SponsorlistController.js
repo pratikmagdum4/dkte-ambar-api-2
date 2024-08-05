@@ -6,24 +6,24 @@ const createSponsorList = async (req, res) => {
 
     const savedAchievements = [];
     for (const achievement of achievementsArray) {
-      const { srno, sponsors } = achievement;
-
-      let existingAchievement = await SponsorListSchema.findOne({
-        srno,
-        sponsors,
-      });
-      if (existingAchievement) {
-        savedAchievements.push(existingAchievement);
-      } else {
-        // Create a new achievement document
-        const newAchievement = new SponsorListSchema({
-          srno,
-          sponsors,
-        });
-        // Save the new achievement
-        const savedAchievement = await newAchievement.save();
-        savedAchievements.push(savedAchievement);
-      }
+      const { _id,srno, sponsors } = achievement;
+  if (_id) {
+   let existingAchievement = await SponsorListSchema.findByIdAndUpdate(
+     _id,
+     { srno, sponsors },
+     { new: true }
+   );
+    savedAchievements.push(existingAchievement);
+  } else {
+    // Create a new achievement document
+    const newAchievement = new SponsorListSchema({
+      srno,
+      sponsors,
+    });
+    // Save the new achievement
+    const savedAchievement = await newAchievement.save();
+    savedAchievements.push(savedAchievement);
+  }
     }
     // Send response
     res.status(200).send(savedAchievements);

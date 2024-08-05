@@ -5,13 +5,18 @@ const createTextilePlacementInternationalPlacement = async (req, res) => {
     const achievementArray = req.body;
     const savedAchievements = [];
     for (const achievement of achievementArray) {
-      const { minmaxavg, info } = achievement;
-      let existingAchievement =
-        await TextilePlacementInternationalPlacementModel.findOne({
-          minmaxavg,
-          info,
-        });
-      if (existingAchievement) {
+      const {_id, minmaxavg, info } = achievement;
+      if (_id) {
+        let existingAchievement =
+          await TextilePlacementInternationalPlacementModel.findByIdAndUpdate(
+            _id,
+            {
+              minmaxavg,
+              info,
+            },
+            { new: true }
+          );
+
         savedAchievements.push(existingAchievement);
       } else {
         //create new

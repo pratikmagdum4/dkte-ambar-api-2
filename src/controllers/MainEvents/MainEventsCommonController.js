@@ -29,10 +29,14 @@ const createMainEvent = async (req, res, eventName) => {
     const savedAchievements = [];
 
     for (const achievement of achievementsArray) {
-      const { srno, info } = achievement;
+      const { _id,srno, info } = achievement;
 
-      let existingAchievement = await schema.findOne({ srno, info });
-      if (existingAchievement) {
+      if (_id) {
+        let existingAchievement = await schema.findByIdAndUpdate(
+          _id,
+          { srno, info },
+          { new: true }
+        );
         savedAchievements.push(existingAchievement);
       } else {
         const newAchievement = new schema({ srno, info });

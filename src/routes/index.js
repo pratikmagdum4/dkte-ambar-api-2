@@ -50,7 +50,9 @@ import TextilePlacementIndustrialTraining from "../routes/TrainingPlacement/Text
 import TextilePlacementInternationalPlacement from "../routes/TrainingPlacement/TextilePlacement/TextilePlacementInternationalPlacementRoutes.js";
 import TextilePlacementPackageOffered from "../routes/TrainingPlacement/TextilePlacement/TextilePlacementPackageOfferedRoutes.js";
 
-
+import StaffMembersCateCount from "../routes/StaffMembers/StaffMembersCateCountRoutes.js";
+import StaffMembersCount from "../routes/StaffMembers/StaffMembersCountRoutes.js";
+import StaffMembersList from "../routes/StaffMembers/StaffMembersListRoutes.js";
 
 const router = Router();
 
@@ -89,15 +91,15 @@ router.use(
   facultyAchievementOtherSpecialRoutes
 );
 router.use(
-  "/facultyachievement/paperpresentation",
+  "/facultyachievements/paperpresentation",
   facultyAchievementPaperPresentationRoutes
 );
-router.use("/facultyachievement/patentgrant", FacultyAchievementPatentGrant);
+router.use("/facultyachievements/patentgrant", FacultyAchievementPatentGrant);
 router.use(
-  "/facultyachievement/trainingprogrammes",
+  "/facultyachievements/trainingprogrammes",
   FacultyAchievementTrainingProgrammes
 );
-router.use("/facultyachievement/workshop", FacultyAchievementWorkshop);
+router.use("/facultyachievements/workshop", FacultyAchievementWorkshop);
 
 // Student Achievement Routes
 router.use(
@@ -209,6 +211,11 @@ router.use(
   TextilePlacementInternationalPlacement
 );
 router.use("/textile/placement/packageoffered", TextilePlacementPackageOffered);
+
+
+router.use("/staffmember/category", StaffMembersCateCount);
+router.use("/staffmember/positioncount", StaffMembersCount);
+router.use("/staffmember/list", StaffMembersList);
 
 
 export default router;

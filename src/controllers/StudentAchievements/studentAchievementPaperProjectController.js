@@ -7,19 +7,19 @@ const createStudentAchievementPaperProject = async (req, res) => {
 
     const savedAchievements = [];
     for (const achievement of achievementsArray) {
-      const { name, event, prize } = achievement;
+      const {_id, name, event, prize } = achievement;
 
-      let existingAchievement =
-        await StudentAchievementPaperProjectSchema.findOne({
-          name,
-          event,
-          prize,
-         
-        });
-      if (existingAchievement) {
+      if (_id) {
+        let existingAchievement =
+          await StudentAchievementPaperProjectSchema.findByIdAndUpdate(
+            _id,
+            { name, event, prize },
+            { new: true }
+          );
+  
         savedAchievements.push(existingAchievement);
       } else {
-        // Create a new achievement document
+        
         const newAchievement = new StudentAchievementPaperProjectSchema({
           name,
           event,

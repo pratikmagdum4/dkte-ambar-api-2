@@ -4,12 +4,15 @@ const createTextileCompaniesInternational = async (req, res) => {
     const achievementArray = req.body;
     const savedAchievements = [];
     for (const achievement of achievementArray) {
-      const { internationalcompanies } = achievement;
-      let existingAchievement =
-        await TextileCompaniesInternationalModel.findOne({
-          internationalcompanies,
-        });
-      if (existingAchievement) {
+      const { _id,internationalcompanies } = achievement;
+      if (_id) {
+        let existingAchievement =
+          await TextileCompaniesInternationalModel.findByIdAndUpdate(
+            _id,
+            { internationalcompanies },
+            { new: true }
+          );
+
         savedAchievements.push(existingAchievement);
       } else {
         //create new

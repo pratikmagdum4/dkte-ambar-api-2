@@ -4,18 +4,20 @@ const createEngineeringCompaniesDepartment = async (req, res) => {
     const achievementArray = req.body;
     const savedAchievements = [];
     for (const achievement of achievementArray) {
-      const { branch, studentforcampus, recruitedstd, placementpercentage } =
+      const { _id,branch, studentforcampus, recruitedstd, placementpercentage } =
         achievement;
+      if(_id)
+     {
       let existingAchievement =
-        await EngineeringCompaniesDepartmentModel.findOne({
-          branch,
-          studentforcampus,
-          recruitedstd,
-          placementpercentage,
-        });
-      if (existingAchievement) {
-        savedAchievements.push(existingAchievement);
-      } else {
+        await EngineeringCompaniesDepartmentModel.findByIdAndUpdate(
+          _id,
+          { branch, studentforcampus, recruitedstd, placementpercentage },
+          { new: true }
+        );
+      console.log("hi i m herer ")
+      savedAchievements.push(existingAchievement);
+    }
+       else {
         //create new
         const newAchievement = new EngineeringCompaniesDepartmentModel({
           branch,

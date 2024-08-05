@@ -5,15 +5,15 @@ const createFacultyAchievementPatentGrant = async (req, res) => {
     const achievementArray = req.body;
     const savedAchievements = [];
     for (const achievement of achievementArray) {
-      const { name, title, patentno, grantdate } = achievement;
-      let existingAchievement =
-        await FacultyAchievementPatentGrantSchema.findOne({
-          name,
-          title,
-          patentno,
-          grantdate,
-        });
-      if (existingAchievement) {
+      const {_id, name, title, patentno, grantdate } = achievement;
+      if (_id) {
+        let existingAchievement =
+          await FacultyAchievementPatentGrantSchema.findByIdAndUpdate(
+            _id,
+            { name, title, patentno, grantdate },
+            { new: true }
+          );
+
         savedAchievements.push(existingAchievement);
       } else {
         //create new

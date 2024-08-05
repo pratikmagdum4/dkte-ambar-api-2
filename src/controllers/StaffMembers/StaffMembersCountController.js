@@ -1,25 +1,25 @@
-import StaffMembersListModel from "../../models/StaffMembers/StaffMembersListModel.js";
-const createStaffMembersList = async (req, res) => {
+import StaffMembersCountModel from "../../models/StaffMembers/StaffMembersCountModel.js";
+const createStaffMembersCount = async (req, res) => {
   try {
     const achievementArray = req.body;
     const savedAchievements = [];
 
     for (const achievement of achievementArray) {
-      const { _id, name, position } = achievement;
+      const { _id, namecat, positioncount } = achievement;
       let existingAchievement;
 
       if (_id) {
-        existingAchievement = await StaffMembersListModel.findByIdAndUpdate(
+        existingAchievement = await StaffMembersCountModel.findByIdAndUpdate(
           _id,
-          { name, position },
+          { namecat, positioncount },
           { new: true }
         );
         savedAchievements.push(existingAchievement);
       } else {
         // Create new achievement
-        const newAchievement = new StaffMembersListModel({
-          name,
-          position,
+        const newAchievement = new StaffMembersCountModel({
+          namecat,
+          positioncount,
         });
         const savedAchievement = await newAchievement.save();
         savedAchievements.push(savedAchievement);
@@ -33,19 +33,19 @@ const createStaffMembersList = async (req, res) => {
   }
 };
 
-const getStaffMembersList = async (req, res) => {
+const getStaffMembersCount = async (req, res) => {
   try {
-    const achievement = await StaffMembersListModel.find();
+    const achievement = await StaffMembersCountModel.find();
     res.status(200).send(achievement);
   } catch (error) {
     res.status(400).send(error);
   }
 };
 
-const deleteStaffMembersList = async (req, res) => {
+const deleteStaffMembersCount = async (req, res) => {
   const { id } = req.params;
   try {
-    const achievement = await StaffMembersListModel.findByIdAndDelete(id);
+    const achievement = await StaffMembersCountModel.findByIdAndDelete(id);
     if (!achievement) {
       return res.status(404).json({ message: "Achievement not found" });
     }
@@ -55,14 +55,14 @@ const deleteStaffMembersList = async (req, res) => {
   }
 };
 
-const updateStaffMembersList = async (req, res) => {
+const updateStaffMembersCount = async (req, res) => {
   const { id } = req.params;
-  const { name, position } = req.body;
+  const { namecat, positioncount } = req.body;
 
   try {
-    const updatedAchievement = await StaffMembersListModel.findByIdAndUpdate(
+    const updatedAchievement = await StaffMembersCountModel.findByIdAndUpdate(
       id,
-      { name, position },
+      { namecat, positioncount },
       { new: true }
     );
     if (!updatedAchievement) {
@@ -78,8 +78,8 @@ const updateStaffMembersList = async (req, res) => {
 };
 
 export {
-  createStaffMembersList,
-  getStaffMembersList,
-  deleteStaffMembersList,
-  updateStaffMembersList,
+  createStaffMembersCount,
+  getStaffMembersCount,
+  deleteStaffMembersCount,
+  updateStaffMembersCount,
 };

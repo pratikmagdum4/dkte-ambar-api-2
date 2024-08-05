@@ -3,13 +3,13 @@
 import mongoose from "mongoose";
 
 const staffMembersListSchema = new mongoose.Schema({
-  srno: { type: String, default: "" },
+  name: { type: String, default: "" },
 
   position: { type: String, default: "" },
 });
 
-const StaffMembersListSchema = mongoose.model(
-  "StaffMembersListSchema",
+const StaffMembersListModel = mongoose.model(
+  "StaffMembersListModel",
   staffMembersListSchema
 );
-export default StaffMembersListSchema;
+export default StaffMembersListModel;

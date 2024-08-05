@@ -6,13 +6,16 @@ const createFacultyAchievementOtherSpecial = async (req, res) => {
     const savedAchievements = [];
 
     for (const achievement of achievementArray) {
-      const { srno, info } = achievement;
+      const {_id, srno, info } = achievement;
 
-      let existingAchievement = await FacultyAchievementOtherSpecial.findOne({
-        srno,
-        info,
-      });
-      if (existingAchievement) {
+      if (_id) {
+        let existingAchievement =
+          await FacultyAchievementOtherSpecial.findByIdAndUpdate(
+            _id,
+            { srno, info },
+            { new: true }
+          );
+
         savedAchievements.push(existingAchievement);
       } else {
         const newAchievement = new FacultyAchievementOtherSpecial({
