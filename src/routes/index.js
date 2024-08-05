@@ -54,6 +54,8 @@ import StaffMembersCateCount from "../routes/StaffMembers/StaffMembersCateCountR
 import StaffMembersCount from "../routes/StaffMembers/StaffMembersCountRoutes.js";
 import StaffMembersList from "../routes/StaffMembers/StaffMembersListRoutes.js";
 
+import AdminNotification from "../routes/Notification/AdminNotificationRoutes.js";
+
 const router = Router();
 
 // S3 Client Configuration
@@ -222,6 +224,9 @@ router.use("/textile/placement/packageoffered", TextilePlacementPackageOffered);
 router.use("/staffmember/category", StaffMembersCateCount);
 router.use("/staffmember/positioncount", StaffMembersCount);
 router.use("/staffmember/list", StaffMembersList);
+
+
+router.use("/adminnotification", AdminNotification);
 
 
 export default router;
