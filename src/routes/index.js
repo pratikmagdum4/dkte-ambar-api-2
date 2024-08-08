@@ -1,4 +1,6 @@
 import { Router } from "express";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import facultyAchievementBookPublicationRoutes from "./FacultyAchievements/facultyAchievementBookPublicationRoutes.js";
 import facultyAchievementPaperPublicationRoutes from "./FacultyAchievements/facultyAchievementPaperPublicationRoutes.js";
@@ -59,6 +61,11 @@ import FirstYearDiplomaModel from "../models/StudentAchievements/Courses/Diploma
 import SecondYearDiplomaModel from "../models/StudentAchievements/Courses/Diploma/DiplomaSecondYearModel.js";
 import ThirdYearDiplomaModel from "../models/StudentAchievements/Courses/Diploma/DiplomaThirdYearModel.js";
 import MBAModel from "../models/StudentAchievements/Courses/MBA/MBAModel.js";
+
+import ClerkSignUpRotues from "../routes/SignUp/ClerkSignUpRoutes.js";
+// import AdminSignUpRoutes from "../routes/SignUp/AdminSignUpRoutes.js";
+import AdminLoginRoutes from "../routes/Login/AdminLoginRoutes.js";
+import ClerkLoginRoutes from "../routes/Login/ClerkLoginRoutes.js";
 
 const router = Router();
 
@@ -235,6 +242,10 @@ router.use("/staffmember/list", StaffMembersList);
 
 
 router.use("/adminnotification", AdminNotification);
+router.use("/signup", ClerkSignUpRotues);
+router.use("/login/admin", AdminLoginRoutes);
+console.log("hi im nerer")
+router.use("/login/clerk", ClerkLoginRoutes);
 
 
 export default router;
