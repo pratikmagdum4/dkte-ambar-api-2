@@ -6,13 +6,13 @@ import ClerkSignUpModel from "../../models/SignUp/ClerkSignUpModel.js";
 
 
 const ClerkLogin  = async (req, res) => {
-    console.log("i m in fucnt")
+    // console.log("i m in fucnt")
   const { email, password } = req.body;
   const { department } = req.params;
-console.log("thte depart is ",department)
-console.log("thte email is ",email)
+// console.log("thte depart is ",department)
+// console.log("thte email is ",email)
   try {
-
+console.log("hi im herer in the login  ")
     const existingClerk = await ClerkSignUpModel.findOne({ email, department });
     console.log("the user is ",existingClerk)
     if (!existingClerk) {
@@ -30,7 +30,7 @@ console.log("thte email is ",email)
     const token = jwt.sign({ id: existingClerk._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-
+console.log("i got here ")
     res.status(200).json({ result: existingClerk, token });
   } catch (error) {
     res.status(500).json({ message: "Something went wrong" });

@@ -7,7 +7,7 @@ import AdminLoginModel from "../../models/SignUp/AdminSignUpModel.js";
 
 const AdminLogin =  async (req, res) => {
   const { email, password } = req.body;
-
+console.log("email is ",email)
   try {
     const existingAdmin = await AdminLoginModel.findOne({ email });
     if (!existingAdmin) {

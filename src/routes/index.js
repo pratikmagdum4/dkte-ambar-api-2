@@ -63,6 +63,7 @@ import ThirdYearDiplomaModel from "../models/StudentAchievements/Courses/Diploma
 import MBAModel from "../models/StudentAchievements/Courses/MBA/MBAModel.js";
 
 import ClerkSignUpRotues from "../routes/SignUp/ClerkSignUpRoutes.js";
+import AdminSignUpRotues from "../routes/SignUp/AdminSignUpRoutes.js";
 // import AdminSignUpRoutes from "../routes/SignUp/AdminSignUpRoutes.js";
 import AdminLoginRoutes from "../routes/Login/AdminLoginRoutes.js";
 import ClerkLoginRoutes from "../routes/Login/ClerkLoginRoutes.js";
@@ -243,6 +244,7 @@ router.use("/staffmember/list", StaffMembersList);
 
 router.use("/adminnotification", AdminNotification);
 router.use("/signup", ClerkSignUpRotues);
+router.use("/signup", AdminSignUpRotues);
 router.use("/login/admin", AdminLoginRoutes);
 console.log("hi im nerer")
 router.use("/login/clerk", ClerkLoginRoutes);
