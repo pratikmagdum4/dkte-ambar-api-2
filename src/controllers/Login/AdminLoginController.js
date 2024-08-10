@@ -25,8 +25,8 @@ console.log("email is ",email)
     const token = jwt.sign({ id: existingAdmin._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-
-    res.status(200).json({ result: existingAdmin, token });
+const role = "admin"
+    res.status(200).json({ result: existingAdmin, token ,role});
   } catch (error) {
     res.status(500).json({ message: "Something went wrong" });
   }

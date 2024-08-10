@@ -30,8 +30,9 @@ console.log("hi im herer in the login  ")
     const token = jwt.sign({ id: existingClerk._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
+    const role= "clerk";
 console.log("i got here ")
-    res.status(200).json({ result: existingClerk, token });
+    res.status(200).json({ result: existingClerk, token,role });
   } catch (error) {
     res.status(500).json({ message: "Something went wrong" });
   }
