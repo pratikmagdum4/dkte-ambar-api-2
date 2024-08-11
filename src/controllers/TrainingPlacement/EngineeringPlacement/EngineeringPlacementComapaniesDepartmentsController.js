@@ -2,6 +2,7 @@ import EngineeringCompaniesDepartmentModel from "../../../models/TrainingPlaceme
 const createEngineeringCompaniesDepartment = async (req, res) => {
   try {
     const achievementArray = req.body;
+    const { dept } = req.params;
     const savedAchievements = [];
     for (const achievement of achievementArray) {
       const { _id,branch, studentforcampus, recruitedstd, placementpercentage } =
@@ -14,7 +15,6 @@ const createEngineeringCompaniesDepartment = async (req, res) => {
           { branch, studentforcampus, recruitedstd, placementpercentage },
           { new: true }
         );
-      console.log("hi i m herer ")
       savedAchievements.push(existingAchievement);
     }
        else {
@@ -24,6 +24,7 @@ const createEngineeringCompaniesDepartment = async (req, res) => {
           studentforcampus,
           recruitedstd,
           placementpercentage,
+          dept
         });
         //save
         const savedAchievement = await newAchievement.save();

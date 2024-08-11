@@ -22,7 +22,8 @@ const createStudentAchievementSpecialAchievements = async (
   try {
     const schema = getSchema(examType);
     const achievementsArray = req.body;
-
+const { dept } = req.params;
+console.log("dept is ",dept)
     const savedAchievements = [];
     for (const achievement of achievementsArray) {
       const { _id, srno, name, Class } = achievement;
@@ -31,13 +32,14 @@ const createStudentAchievementSpecialAchievements = async (
         // Update existing achievement if _id is provided
         let updatedAchievement = await schema.findByIdAndUpdate(
           _id,
-          { srno, name, Class },
+          { srno, name, Class,dept },
           { new: true }
         );
         savedAchievements.push(updatedAchievement);
       } else {
         // Create a new achievement if _id is not provided
-        const newAchievement = new schema({ srno, name, Class });
+        console.log("i mhere ")
+        const newAchievement = new schema({ srno, name, Class,dept });
         const savedAchievement = await newAchievement.save();
         savedAchievements.push(savedAchievement);
       }

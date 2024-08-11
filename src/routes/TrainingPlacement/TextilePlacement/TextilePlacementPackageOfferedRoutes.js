@@ -12,7 +12,7 @@ import {  createTextilePlacementPackageOffered,
   router.use(express.json());
   router.use(express.urlencoded({ extended: true }));
 
-  router.post("/submit", createTextilePlacementPackageOffered);
+  router.post("/submit/:dept", createTextilePlacementPackageOffered);
   router.get("/getdata", getTextilePlacementPackageOffered);
   router.delete("/delete/:id", deleteTextilePlacementPackageOffered);
   router.put("/update/:id", updateTextilePlacementPackageOffered);

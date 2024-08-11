@@ -2,6 +2,7 @@ import TextilePlacementInternationalPlacementModel from "../../../models/Trainin
 
 const createTextilePlacementInternationalPlacement = async (req, res) => {
   try {
+    const { dept } = req.params;
     const achievementArray = req.body;
     const savedAchievements = [];
     for (const achievement of achievementArray) {
@@ -23,6 +24,7 @@ const createTextilePlacementInternationalPlacement = async (req, res) => {
         const newAchievement = new TextilePlacementInternationalPlacementModel({
           minmaxavg,
           info,
+          dept
         });
         //save
         const savedAchievement = await newAchievement.save();

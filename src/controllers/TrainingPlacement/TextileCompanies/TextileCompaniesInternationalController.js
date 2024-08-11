@@ -3,6 +3,7 @@ const createTextileCompaniesInternational = async (req, res) => {
   try {
     const achievementArray = req.body;
     const savedAchievements = [];
+    const { dept } = req.params;
     for (const achievement of achievementArray) {
       const { _id,internationalcompanies } = achievement;
       if (_id) {
@@ -18,6 +19,7 @@ const createTextileCompaniesInternational = async (req, res) => {
         //create new
         const newAchievement = new TextileCompaniesInternationalModel({
           internationalcompanies,
+          dept
         });
         //save
         const savedAchievement = await newAchievement.save();

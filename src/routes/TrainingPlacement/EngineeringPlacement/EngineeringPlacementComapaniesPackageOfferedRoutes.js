@@ -9,7 +9,7 @@ const router = express.Router();
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-router.post("/submit", createEngineeringCompaniesPackageOffered);
+router.post("/submit/:dept", createEngineeringCompaniesPackageOffered);
 
 router.get("/getdata", getEngineeringCompaniesPackageOffered);
 

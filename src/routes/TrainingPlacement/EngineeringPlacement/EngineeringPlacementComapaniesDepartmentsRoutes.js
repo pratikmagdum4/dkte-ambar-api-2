@@ -8,7 +8,7 @@ import express from "express";
 const router = express.Router();
 router.use(express.json());
 router.use(express.urlencoded({ extended:true}));
-router.post("/submit", createEngineeringCompaniesDepartment);
+router.post("/submit/:dept", createEngineeringCompaniesDepartment);
 
 router.get("/getdata", getEngineeringCompaniesDepartment);
 

@@ -2,6 +2,7 @@ import EngineeringCompaniesIndustrialTrainingModel from "../../../models/Trainin
 
 const createEngineeringCompaniesIndustrialTraining = async (req, res) => {
   try {
+    const { dept } = req.params;
     const achievementArray = req.body;
     const savedAchievements = [];
     for (const achievement of achievementArray) {
@@ -23,6 +24,7 @@ const createEngineeringCompaniesIndustrialTraining = async (req, res) => {
         const newAchievement = new EngineeringCompaniesIndustrialTrainingModel({
           category,
           studentcount,
+          dept
         });
         //save
         const savedAchievement = await newAchievement.save();

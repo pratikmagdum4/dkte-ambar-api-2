@@ -5,6 +5,7 @@ const upGraduationSchema = new mongoose.Schema({
   name: { type: String, default: "" },
   designation: { type: String, default: "" },
   course: { type: String, default: "" },
+  dept: { type: String, default: "" },
 });
 
 const UpGraduationSchema = mongoose.model(

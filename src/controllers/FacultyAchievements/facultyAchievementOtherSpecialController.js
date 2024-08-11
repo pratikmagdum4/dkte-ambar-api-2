@@ -4,7 +4,7 @@ const createFacultyAchievementOtherSpecial = async (req, res) => {
   try {
     const achievementArray = req.body;
     const savedAchievements = [];
-
+const { dept } = req.params;
     for (const achievement of achievementArray) {
       const {_id, srno, info } = achievement;
 
@@ -21,6 +21,7 @@ const createFacultyAchievementOtherSpecial = async (req, res) => {
         const newAchievement = new FacultyAchievementOtherSpecial({
           srno,
           info,
+          dept
         });
 
         const savedAchievement = await newAchievement.save();

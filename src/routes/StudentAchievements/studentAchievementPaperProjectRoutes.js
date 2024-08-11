@@ -12,7 +12,7 @@ const router = express.Router();
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-router.post("/submit", createStudentAchievementPaperProject);
+router.post("/submit/:dept", createStudentAchievementPaperProject);
 router.get("/getdata", getStudentAchievementsPaperProject);
 router.put("/:id", updateStudentAchievementPaperProject);
 router.delete("/:id", deleteStudentAchievementPaperProject);

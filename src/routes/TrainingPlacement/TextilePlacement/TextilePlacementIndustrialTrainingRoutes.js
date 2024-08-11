@@ -10,7 +10,7 @@ const router = express.Router();
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-router.post("/submit", createTextilePlacementIndustrialTraining);
+router.post("/submit/:dept", createTextilePlacementIndustrialTraining);
 
 router.get("/getdata", getTextilePlacementIndustrialTraining);
 

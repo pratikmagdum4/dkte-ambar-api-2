@@ -10,7 +10,7 @@ import {createStaffMembersCount,
   router.use(express.json());
   router.use(express.urlencoded({ extended: true }));
 
-  router.post("/submit", createStaffMembersCount);
+  router.post("/submit/:dept", createStaffMembersCount);
   router.get("/getdata", getStaffMembersCount);
   router.delete("/:id", deleteStaffMembersCount);
   router.put("/:id", updateStaffMembersCount);

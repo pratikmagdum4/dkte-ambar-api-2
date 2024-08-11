@@ -23,6 +23,7 @@ const saveFirstYearBtechEngineeringData = async (req, res,year) => {
   //   (student) => student.stdname.trim() !== "" && student.cgpa.trim() !== ""
   // );
   try {
+    const { dept } = req.params;
     const schemas = getSchema(year);
   const savedStudents = []
     for (const student of students) {

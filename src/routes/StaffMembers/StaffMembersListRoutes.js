@@ -12,7 +12,7 @@ const router = express.Router();
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-router.post("/submit", createStaffMembersList);
+router.post("/submit/:dept", createStaffMembersList);
 
 router.get("/getdata", getStaffMembersList);
 

@@ -4,6 +4,7 @@ const studentAchievementSpecialAchievementsToeflSchema = new mongoose.Schema({
   srno: { type: String, default: "" },
   name: { type: String, default: "" },
   Class: { type: String, default: "" },
+   dept: { type: String, default: "" },
 });
 
 const StudentAchievementSpecialAchievementsToeflSchema = mongoose.model(

@@ -12,7 +12,7 @@ import {
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-router.post("/submit", createFacultyAchievementOtherSpecial);
+router.post("/submit/:dept", createFacultyAchievementOtherSpecial);
 router.delete("/:id", deleteFacultyAchievementOtherSpecial);
 router.get("/getdata", getFacultyAchievementsOtherSpecial);
 router.put("/:id", updateFacultyAchievementOtherSpecial);

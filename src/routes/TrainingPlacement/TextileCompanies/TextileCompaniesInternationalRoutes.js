@@ -10,7 +10,7 @@ import { createTextileCompaniesInternational,
   router.use(express.json());
   router.use(express.urlencoded({ extended: true }));
 
-  router.post("/submit", createTextileCompaniesInternational);
+  router.post("/submit/:dept", createTextileCompaniesInternational);
   router.get("/getdata", getTextileCompaniesInternational);
   router.delete("/delete/:id", deleteTextileCompaniesInternational);
   router.put("/update/:id", updateTextileCompaniesInternational);

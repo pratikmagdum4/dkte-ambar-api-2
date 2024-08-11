@@ -10,7 +10,7 @@ import {
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-router.post("/submit", createStudentAchievementAppreciationPrize);
+router.post("/submit/:dept", createStudentAchievementAppreciationPrize);
 router.get("/getdata", getStudentAchievementAppreciationPrize);
 router.put("/:id", updateStudentAchievementAppreciationPrize);
 router.delete("/:id", deleteStudentAchievementAppreciationPrize);

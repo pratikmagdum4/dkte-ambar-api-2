@@ -1,9 +1,8 @@
 import UpGraduationSchema from "../../models/UpGraduation/UpGraduationModel.js";
 const createUpGraduation = async (req, res) => {
   try {
-    console.log("hi i m in controller");
     const achievementsArray = req.body;
-
+const { dept } = req.params;
     const savedAchievements = [];
     for (const achievement of achievementsArray) {
       const { srno, name, designation, course } = achievement;
@@ -23,6 +22,7 @@ const createUpGraduation = async (req, res) => {
           name,
           designation,
           course,
+          dept
         });
         // Save the new achievement
         const savedAchievement = await newAchievement.save();

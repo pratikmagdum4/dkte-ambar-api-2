@@ -5,7 +5,7 @@ const engineeringCompaniesDepartmentSchema = new mongoose.Schema({
   studentforcampus: { type: String, default: "" },
   recruitedstd: { type: String, default: "" },
   placementpercentage: { type: String, default: "" },
- 
+  dept: { type: String, default: "" },
 });
 
 const EngineeringCompaniesDepartmentModel = mongoose.model(

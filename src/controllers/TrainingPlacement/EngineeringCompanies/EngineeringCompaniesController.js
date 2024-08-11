@@ -5,7 +5,7 @@ const createEngineeringCompanies = async (req, res) => {
     
     const achievementArray = req.body;
     const savedAchievements = [];
-
+const { dept } = req.params;
     for (const achievement of achievementArray) {
       const { _id,engineeringcompanies } = achievement;
        let existingAchievement;
@@ -23,6 +23,7 @@ const createEngineeringCompanies = async (req, res) => {
         // Create new achievement
         const newAchievement = new EngineeringCompaniesModel({
           engineeringcompanies,
+          dept
         });
         const savedAchievement = await newAchievement.save();
         savedAchievements.push(savedAchievement);

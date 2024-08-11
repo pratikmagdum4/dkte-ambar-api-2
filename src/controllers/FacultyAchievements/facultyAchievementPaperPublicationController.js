@@ -3,7 +3,7 @@ import FacultyAchievementPaperPublicationSchema from "../../models/FacultyAchiev
 const createFacultyAchievementPaperPublication = async (req, res) => {
   try {
     const achievementsArray = req.body;
-
+const { dept } = req.params;
     const savedAchievements = [];
     for (const achievement of achievementsArray) {
       const {_id, srno, info } = achievement;
@@ -22,6 +22,7 @@ const createFacultyAchievementPaperPublication = async (req, res) => {
          const newAchievement = new FacultyAchievementPaperPublicationSchema({
            srno,
            info,
+           dept
          });
          // Save the new achievement
          const savedAchievement = await newAchievement.save();

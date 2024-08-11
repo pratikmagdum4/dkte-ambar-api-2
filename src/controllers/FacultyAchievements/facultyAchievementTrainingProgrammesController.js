@@ -4,7 +4,7 @@ const createFacultyAchievementTrainingProgrammes = async (req, res) => {
   try {
     const achievementArray = req.body;
     const savedAchievements = [];
-
+const { dept } = req.params;
     for (const achievement of achievementArray) {
       const {_id, name, training } = achievement;
 
@@ -21,6 +21,7 @@ const createFacultyAchievementTrainingProgrammes = async (req, res) => {
         const newAchievement = new FacultyAchievementTrainingProgrammesSchema({
           name,
           training,
+          dept
         });
 
         const savedAchievement = await newAchievement.save();

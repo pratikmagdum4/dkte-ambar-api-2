@@ -4,6 +4,7 @@ const createTextilePlacementPackageOffered = async (req, res) => {
   try {
     const achievementArray = req.body;
     const savedAchievements = [];
+    const { dept } = req.params;
     for (const achievement of achievementArray) {
       const {_id, minmaxavg, info } = achievement;
       if (_id) {
@@ -23,6 +24,7 @@ const createTextilePlacementPackageOffered = async (req, res) => {
         const newAchievement = new TextilePlacementPackageOfferedModel({
           minmaxavg,
           info,
+          dept
         });
         //save
         const savedAchievement = await newAchievement.save();

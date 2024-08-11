@@ -12,7 +12,7 @@ import {
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-router.post("/submit", createFacultyAchievementPaperPresentation);
+router.post("/submit/:dept", createFacultyAchievementPaperPresentation);
 router.delete("/:id", deleteFacultyAchievementPaperPresentation);
 router.get("/getdata", getFacultyAchievementsPaperPresentation);
 router.put("/:id", updateFacultyAchievementPaperPresentation);

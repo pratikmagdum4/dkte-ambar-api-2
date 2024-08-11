@@ -1,9 +1,10 @@
 import mongoose from "mongoose"
 
 const facultyAchievementOtherSpecialSchema = new mongoose.Schema({
-    srno:{type:String,default:""},
-    info:{type:String,default:""},
-}) ;
+  srno: { type: String, default: "" },
+  info: { type: String, default: "" },
+  dept: { type: String, default: "" },
+}); 
 
 const FacultyAchievementOtherSpecialSchema = mongoose.model(
     "FacultyAchievementOtherSpecial",

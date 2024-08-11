@@ -11,7 +11,7 @@ const router = express.Router();
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-router.post("/submit", createTextilePlacementInternationalPlacement);
+router.post("/submit/:dept", createTextilePlacementInternationalPlacement);
 
 router.get("/getdata", getTextilePlacementInternationalPlacement);
 

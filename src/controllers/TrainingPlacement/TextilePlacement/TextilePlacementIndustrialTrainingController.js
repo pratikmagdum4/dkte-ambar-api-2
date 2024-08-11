@@ -4,6 +4,7 @@ const createTextilePlacementIndustrialTraining = async (req, res) => {
   try {
     const achievementArray = req.body;
     const savedAchievements = [];
+    const { dept } = req.params;
     for (const achievement of achievementArray) {
       const {_id, category, studentcount } = achievement;
      if (_id) {
@@ -23,6 +24,7 @@ const createTextilePlacementIndustrialTraining = async (req, res) => {
        const newAchievement = new TextilePlacementIndustrialTrainingModel({
          category,
          studentcount,
+         dept
        });
        //save
        const savedAchievement = await newAchievement.save();

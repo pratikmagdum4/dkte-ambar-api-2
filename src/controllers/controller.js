@@ -2,6 +2,7 @@ const createAchievement = async (Model, req, res) => {
   try {
     const achievementsArray = req.body;
     const savedAchievements = [];
+    const { dept } = req.params;
     for (const achievement of achievementsArray) {
       const { _id, srno, info } = achievement;
 
@@ -15,7 +16,7 @@ const createAchievement = async (Model, req, res) => {
         savedAchievements.push(existingAchievement);
       } else {
         // If _id is not present, create a new achievement
-        const newAchievement = new Model({ srno, info });
+        const newAchievement = new Model({ srno, info, dept });
         const savedAchievement = await newAchievement.save();
         savedAchievements.push(savedAchievement);
       }

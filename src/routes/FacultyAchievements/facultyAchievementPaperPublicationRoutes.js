@@ -11,7 +11,7 @@ import {
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-router.post("/submit", createFacultyAchievementPaperPublication);
+router.post("/submit/:dept", createFacultyAchievementPaperPublication);
 
 router.get("/getdata", getFacultyAchievementsPaperPublication);
 router.delete("/:id", deleteFacultyAchievementPaperPublication);

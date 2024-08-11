@@ -11,7 +11,7 @@ const router = express.Router();
 router.use(express.json());
 router.use(express.urlencoded({extended: true}));
 
-router.post('/submit', createStudentAchievementHigherStudies);
+router.post("/submit/:dept", createStudentAchievementHigherStudies);
 router.get('/getdata',getStudentAchievementHigherStudies);
 router.put("/:id",updateStudentAchievementHigherStudies);
 router.delete("/:id",deleteStudentAchievementHigherStudies);

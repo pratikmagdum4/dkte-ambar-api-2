@@ -12,7 +12,7 @@ import {
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-router.post("/submit", createFacultyAchievementPatentGrant);
+router.post("/submit/:dept", createFacultyAchievementPatentGrant);
 router.get("/getdata", getFacultyAchievementsPatentGrant);
 router.delete("/:id", deleteFacultyAchievementPatentGrant);
 router.put("/:id", updateFacultyAchievementPatentGrant);

@@ -6,7 +6,7 @@ const router = express.Router();
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-router.post("/submit/:eventName", (req, res) =>
+router.post("/submit/:eventName/:dept", (req, res) =>
   handleMainEvents(req, res, "create")
 );
 router.get("/getdata/:eventName", (req, res) =>

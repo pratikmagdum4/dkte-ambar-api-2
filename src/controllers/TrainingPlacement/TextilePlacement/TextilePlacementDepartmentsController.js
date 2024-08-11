@@ -4,6 +4,7 @@ const createTextilePlacementDepartments = async (req, res) => {
   try {
     const achievementArray = req.body;
     const savedAchievements = [];
+    const { dept } = req.params;
     for (const achievement of achievementArray) {
       const {
         _id,
@@ -12,6 +13,7 @@ const createTextilePlacementDepartments = async (req, res) => {
         studentforcampus,
         recruitedstd,
         placementpercentage,
+        dept
       } = achievement;
      if (_id) {
        let existingAchievement =

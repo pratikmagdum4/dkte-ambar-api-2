@@ -3,7 +3,7 @@ const createStaffMembersList = async (req, res) => {
   try {
     const achievementArray = req.body;
     const savedAchievements = [];
-
+const { dept } = req.params;
     for (const achievement of achievementArray) {
       const { _id, name, position } = achievement;
       let existingAchievement;
@@ -20,6 +20,7 @@ const createStaffMembersList = async (req, res) => {
         const newAchievement = new StaffMembersListModel({
           name,
           position,
+          dept
         });
         const savedAchievement = await newAchievement.save();
         savedAchievements.push(savedAchievement);

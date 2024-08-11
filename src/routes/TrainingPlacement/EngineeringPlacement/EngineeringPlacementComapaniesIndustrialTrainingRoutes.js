@@ -9,7 +9,7 @@ import {createEngineeringCompaniesIndustrialTraining,
   router.use(express.json());
   router.use(express.urlencoded({ extended: true }));
   
-  router.post("/submit", createEngineeringCompaniesIndustrialTraining);
+  router.post("/submit/:dept", createEngineeringCompaniesIndustrialTraining);
   router.get("/getdata", getEngineeringCompaniesIndustrialTraining);
   router.put("/:id", updateEngineeringCompaniesIndustrialTraining);
   router.delete("/:id", deleteEngineeringCompaniesIndustrialTraining);

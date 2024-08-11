@@ -12,7 +12,7 @@ import {
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-router.post("/submit", createFacultyAchievementWorkshop);
+router.post("/submit/:dept", createFacultyAchievementWorkshop);
 router.get("/getdata", getFacultyAchievementsWorkshop);
 router.put("/:id", updateFacultyAchievementWorkshop);
 router.delete("/:id", deleteFacultyAchievementWorkshop);

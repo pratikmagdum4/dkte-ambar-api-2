@@ -4,7 +4,7 @@ const createFacultyAchievementBookPublication = async (req, res) => {
   try {
     console.log("hi i m in controller");
     const achievementsArray = req.body;
-
+    const {dept} = req.params;
     const savedAchievements = [];
     for (const achievement of achievementsArray) {
       const {_id, name, title, agency, isbnno, chapter } = achievement;
@@ -25,6 +25,7 @@ const createFacultyAchievementBookPublication = async (req, res) => {
            agency,
            isbnno,
            chapter,
+           dept,
          });
          // Save the new achievement
          const savedAchievement = await newAchievement.save();

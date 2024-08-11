@@ -3,6 +3,7 @@ import TextileCompaniesNationalModel from "../../../models/TrainingPlacement/Tex
 
 const createTextileCompaniesNational = async (req, res) => {
   try {
+    const { dept } = req.params;
     const achievementArray = req.body;
     const savedAchievements = [];
     for (const achievement of achievementArray) {
@@ -20,6 +21,7 @@ const createTextileCompaniesNational = async (req, res) => {
         //create new
         const newAchievement = new TextileCompaniesNationalModel({
           nationalcompanies,
+          dept
         });
         //save
         const savedAchievement = await newAchievement.save();

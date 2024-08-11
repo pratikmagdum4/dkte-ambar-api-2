@@ -4,6 +4,7 @@ const createFacultyAchievementPatentGrant = async (req, res) => {
   try {
     const achievementArray = req.body;
     const savedAchievements = [];
+    const {dept} = req.params;
     for (const achievement of achievementArray) {
       const {_id, name, title, patentno, grantdate } = achievement;
       if (_id) {
@@ -22,6 +23,7 @@ const createFacultyAchievementPatentGrant = async (req, res) => {
           title,
           patentno,
           grantdate,
+          dept
         });
         //save
         const savedAchievement = await newAchievement.save();

@@ -15,12 +15,12 @@ const firstYearBtechEngineeringSchema = new Schema({
   cgpa: {
     type: String,
     required: false,
-    
   },
   dept: {
     type: String,
     required: false,
   },
+  
 });
 
 const FirstYearBtechEngineeringModel = mongoose.model(

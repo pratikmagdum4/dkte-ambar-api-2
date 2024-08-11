@@ -7,7 +7,7 @@ const router = express.Router();
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-router.post("/submit/:examType", (req, res) =>
+router.post("/submit/:examType/:dept", (req, res) =>
   handleStudentAchievementSpecialAchievements(req, res, "create")
 );
 router.get("/getdata/:examType", (req, res) =>

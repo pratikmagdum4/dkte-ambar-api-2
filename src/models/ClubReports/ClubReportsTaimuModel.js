@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 const clubReportsTaimuSchema = new mongoose.Schema({
   // srno: { type: String, default: "" },
   info: { type: String, default: "" },
+  dept: { type: String, default: "" },
 });
 
 const ClubReportsTaimuSchema = mongoose.model(

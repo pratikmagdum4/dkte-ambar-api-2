@@ -6,6 +6,7 @@ const facultyAchievementBookPublicationSchema = new mongoose.Schema({
   agency: { type: String, default: "" },
   isbnno: { type: String, default: "" },
   chapter: { type: String, default: "" },
+  dept: { type: String, default: "" },
 });
 
 const FacultyAchievementBookPublicationSchema = mongoose.model(

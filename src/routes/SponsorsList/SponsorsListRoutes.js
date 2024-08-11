@@ -7,7 +7,7 @@ const router = express.Router();
 router.use(express.json());
 router.use(express.urlencoded({ extended:true}));
 
-router.post("/submit", createSponsorList);
+router.post("/submit/:dept", createSponsorList);
 router.get("/getdata",getSponsorList);
 router.put("/:id",updateSponsorList);
 router.delete("/:id",deleteSponsorList);

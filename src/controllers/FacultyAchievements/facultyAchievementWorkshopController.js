@@ -4,7 +4,7 @@ const createFacultyAchievementWorkshop = async (req, res) => {
   try {
     const achievementArray = req.body;
     const savedAchievements = [];
-
+const { dept } = req.params;
     for (const achievement of achievementArray) {
       const { _id,name, workshopname } = achievement;
 
@@ -21,6 +21,7 @@ const createFacultyAchievementWorkshop = async (req, res) => {
          const newAchievement = new FacultyAchievementWorkshopSchema({
            name,
            workshopname,
+           dept
          });
 
          const savedAchievement = await newAchievement.save();

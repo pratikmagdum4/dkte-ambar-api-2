@@ -11,7 +11,7 @@ import {  createStaffMembersCateCount,
   router.use(express.json());
   router.use(express.urlencoded({ extended: true }));
 
-  router.post("/submit", createStaffMembersCateCount);
+  router.post("/submit/:dept", createStaffMembersCateCount);
   router.get("/getdata", getStaffMembersCateCount);
   router.delete(":id", deleteStaffMembersCateCount);
   router.put(":id", updateStaffMembersCateCount);

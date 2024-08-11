@@ -6,7 +6,7 @@ const router = express.Router();
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
-router.post("/submit/:clubName", (req, res) => {
+router.post("/submit/:clubName/:dept", (req, res) => {
   handleClubReports(req, res, "create");
 });
 

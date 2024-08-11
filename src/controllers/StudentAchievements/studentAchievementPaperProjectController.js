@@ -2,9 +2,8 @@
 import StudentAchievementPaperProjectSchema from "../../models/StudentAchievements/studentAchievementPaperProjectModel.js";
 const createStudentAchievementPaperProject = async (req, res) => {
   try {
-    console.log("hi i m in controller");
     const achievementsArray = req.body;
-
+const { dept } = req.params;
     const savedAchievements = [];
     for (const achievement of achievementsArray) {
       const {_id, name, event, prize } = achievement;
@@ -24,6 +23,7 @@ const createStudentAchievementPaperProject = async (req, res) => {
           name,
           event,
           prize,
+          dept
         });
         // Save the new achievement
         const savedAchievement = await newAchievement.save();

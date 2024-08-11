@@ -1,31 +1,35 @@
 import SponsorListSchema from "../../models/SponsoresList/SponsoresListModel.js";
+
 const createSponsorList = async (req, res) => {
   try {
     console.log("hi i m in paper controller");
     const achievementsArray = req.body;
-
+    const { dept } = req.params; // The department of the current clerk
     const savedAchievements = [];
+
     for (const achievement of achievementsArray) {
-      const { _id,srno, sponsors } = achievement;
-  if (_id) {
-   let existingAchievement = await SponsorListSchema.findByIdAndUpdate(
-     _id,
-     { srno, sponsors },
-     { new: true }
-   );
-    savedAchievements.push(existingAchievement);
-  } else {
-    // Create a new achievement document
-    const newAchievement = new SponsorListSchema({
-      srno,
-      sponsors,
-    });
-    // Save the new achievement
-    const savedAchievement = await newAchievement.save();
-    savedAchievements.push(savedAchievement);
-  }
+      const { _id, srno, sponsors } = achievement;
+
+      if (_id) {
+        // If the row exists, update only srno and sponsors, do not update dept
+        let existingAchievement = await SponsorListSchema.findByIdAndUpdate(
+          _id,
+          { srno, sponsors }, // Only update these fields
+          { new: true }
+        );
+        savedAchievements.push(existingAchievement);
+      } else {
+        // If it's a new row, create it with the department of the current clerk
+        const newAchievement = new SponsorListSchema({
+          srno,
+          sponsors,
+          dept, // Save the dept of the current clerk
+        });
+        const savedAchievement = await newAchievement.save();
+        savedAchievements.push(savedAchievement);
+      }
     }
-    // Send response
+
     res.status(200).send(savedAchievements);
   } catch (error) {
     console.error("Error saving achievement:", error);
@@ -64,10 +68,7 @@ const updateSponsorList = async (req, res) => {
   try {
     const updatedAchievement = await SponsorListSchema.findByIdAndUpdate(
       id,
-      {
-        srno,
-        sponsors,
-      },
+      { srno, sponsors }, // Only update these fields, not dept
       { new: true }
     );
     if (!updatedAchievement) {

@@ -11,7 +11,7 @@ router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 
 
-router.post("/submit", createEngineeringCompanies);
+router.post("/submit/:dept", createEngineeringCompanies);
 
 router.get("/getdata", getEngineeringCompanies);
 

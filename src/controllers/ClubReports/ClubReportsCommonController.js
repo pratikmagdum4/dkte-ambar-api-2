@@ -28,6 +28,7 @@ const createClubReports = async (req, res, clubName) => {
     if (!schema) {
       return res.status(400).json({ message: "Invalid club name" });
     }
+    const{dept} = req.params;
 
     const achievementsArray = req.body;
     const savedAchievements = [];
@@ -43,7 +44,7 @@ const createClubReports = async (req, res, clubName) => {
        );
        savedAchievements.push(existingAchievement);
      } else {
-       const newAchievement = new schema({  info });
+       const newAchievement = new schema({ info, dept });
        const savedAchievement = await newAchievement.save();
        savedAchievements.push(savedAchievement);
      }
