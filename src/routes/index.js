@@ -68,6 +68,8 @@ import AdminSignUpRotues from "../routes/SignUp/AdminSignUpRoutes.js";
 import AdminLoginRoutes from "../routes/Login/AdminLoginRoutes.js";
 import ClerkLoginRoutes from "../routes/Login/ClerkLoginRoutes.js";
 
+import ClerkProgressTrackingRoutes from "../routes/ClerkProgressTracking/ClerkProgressTrackingRoutes.js";
+
 const router = Router();
 
 // S3 Client Configuration
@@ -248,6 +250,9 @@ router.use("/signup", AdminSignUpRotues);
 router.use("/login/admin", AdminLoginRoutes);
 console.log("hi im nerer")
 router.use("/login/clerk", ClerkLoginRoutes);
+
+
+router.use("/progress/clerk", ClerkProgressTrackingRoutes);
 
 
 export default router;
