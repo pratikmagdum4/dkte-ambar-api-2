@@ -2,10 +2,11 @@ import { createMainEvent,getMainEvent,updateMainEvent,deleteMainEvent } from "./
 
 const handleMainEvents = async (req,res,action)=>{
     const {eventName} = req.params;
+    const {dept} = req.params
     switch (action)
     {
         case "create":
-            await createMainEvent(req,res,eventName);
+            await createMainEvent(req, res, eventName, dept);
             break;
         case "get":
             await getMainEvent(req,res,eventName);
