@@ -23,7 +23,8 @@ const adminSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
- 
+  resetPasswordToken: String,
+  resetPasswordExpires: Date,
 });
 
 // Hash the password before saving the clerk document
