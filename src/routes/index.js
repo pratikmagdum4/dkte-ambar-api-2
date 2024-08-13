@@ -259,7 +259,7 @@ console.log("hi im nerer")
 router.use("/login/clerk", ClerkLoginRoutes);
 
 
-router.use("/progress/clerk", ClerkProgressTrackingRoutes);
+router.use("/clerk", ClerkProgressTrackingRoutes);
 router.use("/admin/clerk", AdminNotificationEmail);
 
 router.use("/data", AdminProfileRoutes);
