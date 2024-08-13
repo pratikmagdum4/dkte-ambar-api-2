@@ -57,6 +57,7 @@ import StaffMembersCount from "../routes/StaffMembers/StaffMembersCountRoutes.js
 import StaffMembersList from "../routes/StaffMembers/StaffMembersListRoutes.js";
 
 import AdminNotification from "../routes/Notification/AdminNotificationRoutes.js";
+import AdminNotificationEmail from "../controllers/Notification/EmailSend.js";
 import FirstYearDiplomaModel from "../models/StudentAchievements/Courses/Diploma/DiplomaFirstYearModel.js";
 import SecondYearDiplomaModel from "../models/StudentAchievements/Courses/Diploma/DiplomaSecondYearModel.js";
 import ThirdYearDiplomaModel from "../models/StudentAchievements/Courses/Diploma/DiplomaThirdYearModel.js";
@@ -253,6 +254,7 @@ router.use("/login/clerk", ClerkLoginRoutes);
 
 
 router.use("/progress/clerk", ClerkProgressTrackingRoutes);
+router.use("/admin/clerk", AdminNotificationEmail);
 
 
 export default router;

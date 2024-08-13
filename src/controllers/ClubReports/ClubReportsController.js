@@ -7,9 +7,10 @@ import {
 
 const handleClubReports = async (req, res, action) => {
   const { clubName } = req.params;
+  const { dept } = req.params;
   switch (action) {
     case "create":
-      await createClubReports(req, res, clubName);
+      await createClubReports(req, res, clubName, dept);
       break;
     case "get":
       await getClubReports(req, res, clubName);
