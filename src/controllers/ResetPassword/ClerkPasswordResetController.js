@@ -1,5 +1,5 @@
 import crypto from "crypto";
-import AdminSignUpModel from "../../models/SignUp/AdminSignUpModel.js";
+import ClerkSignUpModel from "../../models/SignUp/ClerkSignUpModel.js";
 import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({
@@ -10,9 +10,9 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export const sendResetEmail = async (req, res) => {
+export const sendClerkResetEmail = async (req, res) => {
   const { email } = req.body;
-  const user = await AdminSignUpModel.findOne({ email });
+  const user = await ClerkSignUpModel.findOne({ email });
 
   if (!user) {
     return res.status(400).json({ message: "User does not exist" });
@@ -23,14 +23,13 @@ export const sendResetEmail = async (req, res) => {
   user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
 
   await user.save();
+const isLocal = process.env.NODE_ENV === "development"; // assuming NODE_ENV is set to 'development' for local and 'production' for deployed
+const baseURL = isLocal
+  ? "http://localhost:5173"
+  : "https://dkte-amber-website.vercel.app";
 
-  // Determine which URL to use based on environment
-  const isLocal = process.env.NODE_ENV === "development"; // assuming NODE_ENV is set to 'development' for local and 'production' for deployed
-  const baseURL = isLocal
-    ? "http://localhost:5173"
-    : "https://dkte-amber-website.vercel.app";
-
-  const role = "admin";
+  
+  const role = "clerk"
   const resetURL = `${baseURL}/${role}/reset-password/${token}`;
 
   await transporter.sendMail({
@@ -46,18 +45,17 @@ export const sendResetEmail = async (req, res) => {
   res.status(200).json({ message: "Password reset email sent" });
 };
 
-export const resetPassword = async (req, res) => {
-  console.log("yea i came her ");
+export const resetClerkPassword = async (req, res) => {
+  console.log("yea i came her ")
   const { token } = req.params;
   const { password } = req.body;
-  console.log("the data is ", password, token);
-
-  const user = await AdminSignUpModel.findOne({
+console.log("the datais ",password,token)
+  const user = await ClerkSignUpModel.findOne({
     resetPasswordToken: token,
     resetPasswordExpires: { $gt: Date.now() },
   });
 
-  console.log("The user is ", user);
+  console.log("THe user is ",user)
   if (!user) {
     return res
       .status(400)

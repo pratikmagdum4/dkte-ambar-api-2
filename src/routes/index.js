@@ -73,7 +73,10 @@ import ClerkProgressTrackingRoutes from "../routes/ClerkProgressTracking/ClerkPr
 import AdminProfileRoutes from "../routes/Profiles/AdminProfile.js"
 import ClerkProfileRoutes from "../routes/Profiles/ClerkProfile.js"
 
-import ResetPassword from "./ResetPassword/AdminPasswordResetRoutes.js";
+import AdminResetPassword from "./ResetPassword/AdminPasswordResetRoutes.js";
+import ClerkResetPassword from "./ResetPassword/ClerkPasswordResetRoutes.js";
+
+
 const router = Router();
 
 // S3 Client Configuration
@@ -262,5 +265,6 @@ router.use("/admin/clerk", AdminNotificationEmail);
 router.use("/data", AdminProfileRoutes);
 router.use("/data", ClerkProfileRoutes);
 
-router.use("/admin",ResetPassword);
+router.use("/admin",AdminResetPassword);
+router.use("/clerk",ClerkResetPassword);
 export default router;
