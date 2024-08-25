@@ -7,7 +7,7 @@ import AdminLoginModel from "../../models/SignUp/AdminSignUpModel.js";
 
 const AdminLogin =  async (req, res) => {
   const { email, password } = req.body;
-console.log("email is ",email)
+console.log("email is ",email,password);
   try {
     const existingAdmin = await AdminLoginModel.findOne({ email });
     if (!existingAdmin) {
@@ -18,6 +18,7 @@ console.log("email is ",email)
       password,
       existingAdmin.password
     );
+    console.log(isPasswordCorrect)
     if (!isPasswordCorrect) {
       return res.status(400).json({ message: "Invalid credentials" });
     }

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const mbaSchema = new mongoose.Schema({
+const mbaSchema1= new mongoose.Schema({
 
 
   rank: {
@@ -11,20 +11,41 @@ const mbaSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-
-
-
   cgpa: {
     type: String,
     required: false,
   },
   dept: {
     type: String,
-    required: true,
+   
   },
 
 
 });
 
-const MBAModel = mongoose.model("MBAModel", mbaSchema);
-export default MBAModel;
+const FirstYearMBAModel = mongoose.model("FirstYearMBAModel", mbaSchema1);
+const mbaSchema2 = new mongoose.Schema({
+
+
+  rank: {
+    type: Number,
+    required: false,
+  },
+  stdname: {
+    type: String,
+    required: false,
+  },
+  cgpa: {
+    type: String,
+    required: false,
+  },
+  dept: {
+    type: String,
+   
+  },
+
+
+});
+
+const SecondYearMBAModel = mongoose.model("SecondYearMBAModel", mbaSchema2);
+export { FirstYearMBAModel, SecondYearMBAModel };

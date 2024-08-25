@@ -1,39 +1,55 @@
-import FirstYearDiplomaModel from "../../../../models/StudentAchievements/Courses/Diploma/DiplomaFirstYearModel.js";
-import SecondYearDiplomaModel from "../../../../models/StudentAchievements/Courses/Diploma/DiplomaSecondYearModel.js";
-import ThirdYearDiplomaModel from "../../../../models/StudentAchievements/Courses/Diploma/DiplomaThirdYearModel.js";
-
-
+import {
+  FirstYearDiplomaTMModel,
+  FirstYearDiplomaFCModel,
+  FirstYearDiplomaTTModel,
+} from "../../../../models/StudentAchievements/Courses/Diploma/DiplomaFirstYearModel.js";
+import {
+  SecondYearDiplomaTMModel,
+  SecondYearDiplomaFCModel,
+  SecondYearDiplomaTTModel,
+} from "../../../../models/StudentAchievements/Courses/Diploma/DiplomaSecondYearModel.js";
+import {
+  ThirdYearDiplomaTMModel,
+  ThirdYearDiplomaFCModel,
+  ThirdYearDiplomaTTModel,
+} from "../../../../models/StudentAchievements/Courses/Diploma/DiplomaThirdYearModel.js";
 
 const schemas = {
-  first: FirstYearDiplomaModel,
-  second: SecondYearDiplomaModel,
-  third: ThirdYearDiplomaModel,
+  first: {
+    tm: FirstYearDiplomaTMModel,
+    fc: FirstYearDiplomaFCModel,
+    tt: FirstYearDiplomaTTModel,
+  },
+  second: {
+    tm: SecondYearDiplomaTMModel,
+    fc: SecondYearDiplomaFCModel,
+    tt: SecondYearDiplomaTTModel,
+  },
+  third: {
+    tm: ThirdYearDiplomaTMModel,
+    fc: ThirdYearDiplomaFCModel,
+    tt: ThirdYearDiplomaTTModel,
+  },
 };
 
-const getSchema = (year) => {
+const getSchema = (year, dept) => {
+  return schemas[year]?.[dept];
+};
 
-    return schemas[year];
-}
+const saveFirstYearDiplomaData = async (req, res) => {
+  let students = req.body;
+  const {dept,year} = req.params
+  const schema = getSchema(year, dept);
 
-
-const saveFirstYearDiplomaData = async (req, res, year) => {
-  let students = req.body.students;
-  const schemas = getSchema(year);
-  // Filter out students with empty fields
-  students = students.filter(
-    (student) => student.stdname.trim() !== "" && student.cgpa.trim() !== ""
-  );
   try {
     for (const student of students) {
       if (student._id) {
-        // If _id is present, update the existing document
-        await schemas.findByIdAndUpdate(student._id, student, {
+        await schema.findByIdAndUpdate(student._id, student, {
           new: true,
           upsert: true,
         });
       } else {
-        // Otherwise, create a new document
-        const newStudent = new schemas(student);
+        const newStudent = new schema(student);
         await newStudent.save();
       }
     }
@@ -45,9 +61,11 @@ const saveFirstYearDiplomaData = async (req, res, year) => {
   }
 };
 
-const getFirstYearDiplomaData = async (req, res, year) => {
+const getFirstYearDiplomaData = async (req, res) => {
   try {
-    const schema = getSchema(year);
+  const { dept, year } = req.params;
+  const schema = getSchema(year, dept);
+
     const students = await schema.find();
     res.json(students);
   } catch (err) {
@@ -55,6 +73,57 @@ const getFirstYearDiplomaData = async (req, res, year) => {
   }
 };
 
-export { getFirstYearDiplomaData, saveFirstYearDiplomaData };
+const deleteFirstYearDiplomaData = async (req, res) => {
+  try {
+    const { id } = req.params;
+  const { dept, year } = req.params;
+  const schema = getSchema(year, dept);
 
+    if (!schema) {
+      return res.status(400).send("Invalid year");
+    }
 
+    const student = await schema.findByIdAndDelete(id);
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+    res.status(200).json({ message: "Student deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error deleting student" });
+  }
+};
+
+const updateFirstYearDiplomaData = async (req, res) => {
+  try {
+    const {  id } = req.params;
+      const { dept, year } = req.params;
+      const schema = getSchema(year, dept);
+
+    const { stdname, rank, cgpa } = req.body;
+   
+    if (!schema) {
+      return res.status(400).send("Invalid year");
+    }
+
+    const student = await schema.findByIdAndUpdate(
+      id,
+      { stdname, rank, cgpa },
+      { new: true }
+    );
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+    res.status(200).json(student);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error updating student" });
+  }
+};
+
+export {
+  getFirstYearDiplomaData,
+  saveFirstYearDiplomaData,
+  deleteFirstYearDiplomaData,
+  updateFirstYearDiplomaData,
+};

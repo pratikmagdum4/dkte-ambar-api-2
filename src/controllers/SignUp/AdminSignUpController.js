@@ -68,7 +68,8 @@ const updateAdminInfo = async (req, res) => {
 // Function to get admin data by ID
 const getAdminById = async (req, res) => {
   const adminId = req.params.id;
-
+console.log(adminId);
+if(adminId){  
   try {
     const admin = await AdminSignUpModel.findById(adminId).select("-password"); // Exclude password from the response
     if (!admin) {
@@ -80,6 +81,10 @@ const getAdminById = async (req, res) => {
     console.error("Error retrieving admin data:", error);
     res.status(500).json({ msg: "Server error" });
   }
+}
+else{
+  res.status(400).json({ msg: "Invalid admin ID" });
+}
 };
 
 export { adminSignup, updateAdminInfo, getAdminById };

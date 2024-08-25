@@ -1,37 +1,33 @@
-import mbaSchema from "../../../../models/StudentAchievements/Courses/MBA/MBAModel.js";
-// import MBASecondYearModel from "../../../../models/StudentAchievements/Courses/MBA/MBASecondYearModel.js";
+import {
+  FirstYearMBAModel,
+  SecondYearMBAModel,
+} from "../../../../models/StudentAchievements/Courses/MBA/MBAModel.js";
+
+const schemas = {
+  first: FirstYearMBAModel,
+  second: SecondYearMBAModel,
+};
+
+const getSchema = (year) => {
+  return schemas[year];
+};
+
+const saveMbaData = async (req, res) => {
+  let students = req.body;
+  const {year} = req.params;
+  const schema = getSchema(year);
 
 
-// const schemas = {
-//   first: MBAFirstYearModel,
-//   second: MBASecondYearModel,
- 
-// };
 
-// const getSchema = (year) => {
-
-//     return schemas[year];
-// }
-
-
-const saveFirstYearMbaData = async (req, res) => {
-  let students = req.body.students;
-    // const schemas = getSchema(year);
-  // Filter out students with empty fields
-  students = students.filter(
-    (student) => student.stdname.trim() !== "" && student.cgpa.trim() !== ""
-  );
   try {
     for (const student of students) {
       if (student._id) {
-        // If _id is present, update the existing document
-        await mbaSchema.findByIdAndUpdate(student._id, student, {
+        await schema.findByIdAndUpdate(student._id, student, {
           new: true,
           upsert: true,
         });
       } else {
-        // Otherwise, create a new document
-        const newStudent = new mbaSchema(student);
+        const newStudent = new schema(student);
         await newStudent.save();
       }
     }
@@ -43,19 +39,58 @@ const saveFirstYearMbaData = async (req, res) => {
   }
 };
 
-const getFirstYearMbaData = async (req, res) => {
+const getMbaData = async (req, res) => {
   try {
-
-    // const schema = getSchema(year);
-    const students = await mbaSchema.find();
-    console.log("The students ",students);
+    const { year } = req.params;
+    const schema = getSchema(year);
+    const students = await schema.find();
     res.json(students);
-    
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
 
-export { getFirstYearMbaData, saveFirstYearMbaData };
+const deleteMbaData = async (req, res) => {
+  try {
+    const { year, id } = req.params;
+    const schema = getSchema(year);
+    if (!schema) {
+      return res.status(400).send("Invalid year");
+    }
 
+    const student = await schema.findByIdAndDelete(id);
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+    res.status(200).json({ message: "Student deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error deleting student" });
+  }
+};
 
+const updateMbaData = async (req, res) => {
+  try {
+    const { year, id } = req.params;
+    const { stdname, rank, cgpa } = req.body;
+    const schema = getSchema(year);
+    if (!schema) {
+      return res.status(400).send("Invalid year");
+    }
+
+    const student = await schema.findByIdAndUpdate(
+      id,
+      { stdname, rank, cgpa },
+      { new: true }
+    );
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+    res.status(200).json(student);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error updating student" });
+  }
+};
+
+export { getMbaData, saveMbaData, deleteMbaData, updateMbaData };

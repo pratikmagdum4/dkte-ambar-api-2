@@ -20,9 +20,12 @@ app.use(cors());
 // Routes
 app.use("/api", routes);
 
+
 app.get("/", (req, res) => {
   res.json({ message: "Hello from Amber server" });
 });
+
+
 
 app.listen(PORT, () => {
   connectToDB()

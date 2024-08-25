@@ -37,7 +37,7 @@ import FacultyAchievementBookPublicationSchema from "../models/FacultyAchievemen
 
 import BtechCgpa from "../routes/StudentAchievements/Courses/BtechEngineering/BtechCgpaRoutes.js";
 import BtechTextileCgpa from "../routes/StudentAchievements/Courses/BtechTextile/BtechCgpaTextileRoutes.js";
-import DiplomaCgpa from "../routes/StudentAchievements/Courses/Diploma/DiplomaRoutes.js";
+import DiplomaCgpa from "./StudentAchievements/Courses/Diploma/DiplomaCGPARoutes.js";
 import MbaCgpa from "../routes/StudentAchievements/Courses/MBA/MbaRoutes.js";
 
 
@@ -58,10 +58,16 @@ import StaffMembersList from "../routes/StaffMembers/StaffMembersListRoutes.js";
 
 import AdminNotification from "../routes/Notification/AdminNotificationRoutes.js";
 import AdminNotificationEmail from "../controllers/Notification/EmailSend.js";
-import FirstYearDiplomaModel from "../models/StudentAchievements/Courses/Diploma/DiplomaFirstYearModel.js";
-import SecondYearDiplomaModel from "../models/StudentAchievements/Courses/Diploma/DiplomaSecondYearModel.js";
-import ThirdYearDiplomaModel from "../models/StudentAchievements/Courses/Diploma/DiplomaThirdYearModel.js";
-import MBAModel from "../models/StudentAchievements/Courses/MBA/MBAModel.js";
+import {
+  FirstYearDiplomaTMModel,
+  FirstYearDiplomaFCModel,
+  FirstYearDiplomaTTModel,
+} from "../models/StudentAchievements/Courses/Diploma/DiplomaFirstYearModel.js";
+
+import {
+  FirstYearMBAModel,
+  SecondYearMBAModel,
+} from "../models/StudentAchievements/Courses/MBA/MBAModel.js";
 
 import ClerkSignUpRotues from "../routes/SignUp/ClerkSignUpRoutes.js";
 import AdminSignUpRotues from "../routes/SignUp/AdminSignUpRoutes.js";
@@ -75,6 +81,14 @@ import ClerkProfileRoutes from "../routes/Profiles/ClerkProfile.js"
 
 import AdminResetPassword from "./ResetPassword/AdminPasswordResetRoutes.js";
 import ClerkResetPassword from "./ResetPassword/ClerkPasswordResetRoutes.js";
+
+import BtechEngineeringCGPARoutes from "../routes/StudentAchievements/Courses/BtechEngineering/FirstYearBtechEngineeringRoutes.js";
+import BtechTextileCGPARoutes from "../routes/StudentAchievements/Courses/BtechTextile/BtechCgpaTextileRoutes.js";
+import DiplomaCGPARoutes from "../routes/StudentAchievements/Courses/Diploma/DiplomaCGPARoutes.js";
+import MBACGPARoutes from "../routes/StudentAchievements/Courses/MBA/MbaRoutes.js";
+import { SecondYearDiplomaFCModel, SecondYearDiplomaTMModel, SecondYearDiplomaTTModel } from "../models/StudentAchievements/Courses/Diploma/DiplomaSecondYearModel.js";
+
+
 
 
 const router = Router();
@@ -190,9 +204,17 @@ router.use("/technical/verify/:id", UpdateTechArticleVerification);
 
 router.get("/progress", async (req, res) => {
   try {
-   const DiplomaClerk = await FirstYearDiplomaModel.countDocuments() + await SecondYearDiplomaModel.countDocuments() + await ThirdYearDiplomaModel.countDocuments() ;
+   const DiplomaClerk =
+     (await FirstYearDiplomaTMModel.countDocuments()) +
+     (await FirstYearDiplomaFCModel.countDocuments()) +
+     (await FirstYearDiplomaTTModel.countDocuments()); 
+     (await SecondYearDiplomaTMModel.countDocuments()) +
+       (await SecondYearDiplomaFCModel.countDocuments()) +
+       (await SecondYearDiplomaTTModel.countDocuments()); 
 
-   const MBAClerk = await MBAModel.countDocuments() ;
+   const MBAClerk =
+     (await FirstYearMBAModel.countDocuments()) +
+     (await SecondYearMBAModel.countDocuments());
     const facultyAchievementPatentGrantCount =
       await FacultyAchievementPatentGrantSchema.countDocuments();
     const facultyAchievementBookPublicationCount =
@@ -267,4 +289,11 @@ router.use("/data", ClerkProfileRoutes);
 
 router.use("/admin",AdminResetPassword);
 router.use("/clerk",ClerkResetPassword);
+
+
+router.use("/studentscgpa/engi", BtechEngineeringCGPARoutes);
+router.use("/studentscgpa/textile", BtechTextileCGPARoutes);
+router.use("/studentscgpa/diploma", DiplomaCGPARoutes);
+router.use("/studentscgpa/mba", MBACGPARoutes);
+
 export default router;

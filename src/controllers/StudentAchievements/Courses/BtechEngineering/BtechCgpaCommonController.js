@@ -1,7 +1,7 @@
-import FirstYearBtechEngineeringModel from "../../../../models/StudentAchievements/Courses/BtechEngineering/FirstYearBtechEngineeringModel.js";
-import SecondYearBtechEngineeringModel from "../../../../models/StudentAchievements/Courses/BtechEngineering/SecondYearBtechEngineeringModel.js";
-import ThirdYearBtechEngineeringModel from "../../../../models/StudentAchievements/Courses/BtechEngineering/ThirdYearBtechEngineeringModel.js";
-import FourthYearBtechEngineeringModel from "../../../../models/StudentAchievements/Courses/BtechEngineering/FourthYearBtechEngineeringModel.js";
+import {FirstYearBtechEngineeringModel} from "../../../../models/StudentAchievements/Courses/BtechEngineering/FirstYearBtechEngineeringModel.js";
+import {SecondYearBtechEngineeringModel} from "../../../../models/StudentAchievements/Courses/BtechEngineering/SecondYearBtechEngineeringModel.js";
+import {ThirdYearBtechEngineeringModel} from "../../../../models/StudentAchievements/Courses/BtechEngineering/ThirdYearBtechEngineeringModel.js";
+import {FourthYearBtechEngineeringModel} from "../../../../models/StudentAchievements/Courses/BtechEngineering/FourthYearBtechEngineeringModel.js";
 const schemas = {
   first: FirstYearBtechEngineeringModel,
   second: SecondYearBtechEngineeringModel,

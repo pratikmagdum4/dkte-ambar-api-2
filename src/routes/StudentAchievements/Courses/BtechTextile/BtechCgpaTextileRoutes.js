@@ -1,17 +1,20 @@
-import { handleBtechTextileCgpa } from "../../../../controllers/StudentAchievements/Courses/BtechTextile/BtechCgpaTextileController.js";
 
+import {
+  saveBtechTextileAchievements,
+  getBtechTextileAchievements,
+  deleteBtechTextileAchievements,
+  updateBtechTextileAchievements,
+} from "../../../../controllers/StudentAchievements/Courses/BtechTextile/BtechTextileNewController.js";
 import express from "express";
+
 const router = express.Router();
 
 router.use(express.json());
-router.use(express.urlencoded({extended:true}));
+router.use(express.urlencoded({ extended: true }));
 
-router.post("/submit/:year",(req,res)=>{
-    handleBtechTextileCgpa(req,res, "save");
-})
-
-router.get("/get/:year",(req,res)=>{
-    handleBtechTextileCgpa(req,res, "get");
-})
+router.post("/submit/:year/:dept", saveBtechTextileAchievements);
+router.get("/get/:year/:dept", getBtechTextileAchievements);
+router.delete("/:year/:dept/:id", deleteBtechTextileAchievements);
+router.put("/:year/:dept/:id", updateBtechTextileAchievements);
 
 export default router;
