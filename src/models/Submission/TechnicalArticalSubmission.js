@@ -9,7 +9,8 @@ const technicalSubmissionSchema = new mongoose.Schema({
   branch: { type: String, default: "" },
   year: { type: String, default: "" },
   title: { type: String, default: "" },
-  content: { type: String, default: "" },
+  content: { type: String, default: "" }, // Original .docx URL
+  contentPdf: { type: String, default: "" }, // PDF URL
   selfImage: { type: String, default: "" },
   isVerified: { type: Boolean, default: false },
 });

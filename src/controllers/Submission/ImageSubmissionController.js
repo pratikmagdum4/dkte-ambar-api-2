@@ -1,8 +1,11 @@
-import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import {
+  S3Client,
+  GetObjectCommand,
+  DeleteObjectCommand,
+} from "@aws-sdk/client-s3";
 import ImageSubmissionSchema from "../../models/Submission/ImageSubmissionModel.js";
 import dotenv from "dotenv";
-
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 dotenv.config();
 
 const s3 = new S3Client({
@@ -78,14 +81,13 @@ const CreateImageSubmission = async (req, res) => {
       signedUrls,
     });
   } catch (error) {
+    console.log("The error is ",error)
     res.status(500).json({ message: "Error submitting form", error });
   }
 };
 
-
 const getImgUploads = async (req, res) => {
   try {
-    
     const imgUploads = await ImageSubmissionSchema.find();
     res.json(imgUploads);
   } catch (error) {
@@ -95,14 +97,11 @@ const getImgUploads = async (req, res) => {
 
 const getVerifiedImageByType = async (req, res) => {
   try {
-    console.log("hi i mhere offcourse")
     const { imageType } = req.query;
-    console.log("the image type is ", imageType);
     const images = await ImageSubmissionSchema.find({
       isVerified: true,
       imageType: imageType ? imageType : { $exists: true },
     });
-    console.log("the iamgesare ar",images);
     res.json(images);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -128,25 +127,51 @@ const UpdateImageVerification = async (req, res) => {
   }
 };
 
-// const getVerifiedImages = async (req, res) => {
-//   try {
-//     console.log("here i m in teach");
-//     const { language } = req.query;
-//     const articles = await TechnicalSubmissionSchema.find({
-//       isVerified: true,
-//       language: language ? language : { $exists: true },
-//     });
-//     console.log("The articles are ", articles);
-//     res.json(articles);
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// };
+// New function to delete an image by ID
+const deleteImageById = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    // Find the image submission in the database
+    const imageSubmission = await ImageSubmissionSchema.findById(id);
+    if (!imageSubmission) {
+      return res.status(404).json({ message: "Image submission not found" });
+    }
+
+    // Delete the images from S3
+    const deleteImageFromS3 = async (imageUrl) => {
+      if (!imageUrl) return;
+
+      const key = imageUrl.split("/").pop(); // Extract the S3 key from the URL
+      const deleteCommand = new DeleteObjectCommand({
+        Bucket: process.env.AWS_BUCKET_NAME,
+        Key: key,
+      });
+
+      try {
+        await s3.send(deleteCommand);
+      } catch (error) {
+        console.error("Error deleting image from S3:", error);
+        throw new Error("Error deleting image from S3");
+      }
+    };
+
+    await deleteImageFromS3(imageSubmission.imageUrl);
+    await deleteImageFromS3(imageSubmission.selfImage);
+
+    // Delete the submission from the database
+    await ImageSubmissionSchema.findByIdAndDelete(id);
+
+    res.status(200).json({ message: "Image submission deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Error deleting image submission", error });
+  }
+};
+
 export {
   CreateImageSubmission,
   getImgUploads,
   getVerifiedImageByType,
   UpdateImageVerification,
-  
+  deleteImageById, // Export the new delete function
 };
-

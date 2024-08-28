@@ -1,4 +1,4 @@
-import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
+import { S3Client, GetObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import dotenv from "dotenv";
 import ArticleSubmissionSchema from "../../models/Submission/ArticleSubmissionModel.js";
@@ -26,13 +26,18 @@ const CreateArticleSubmission = async (req, res) => {
     isVerified,
   } = req.body;
 
-  const content = req.files["content"]
+  let content = req.files["content"]
     ? req.files["content"][0].location
+    : null;
+  let contentPdf = req.files["contentPdf"]
+    ? req.files["contentPdf"][0].location
     : null;
   const selfImage = req.files["selfImage"]
     ? req.files["selfImage"][0].location
     : null;
-
+ if (content && content.endsWith(".docx")) {
+   content = `https://docs.google.com/viewer?url=${content}`;
+ }
   const newForm = new ArticleSubmissionSchema({
     stdname,
     contact,
@@ -42,9 +47,11 @@ const CreateArticleSubmission = async (req, res) => {
     year,
     title,
     content,
+    contentPdf,
     selfImage,
     language,
     isVerified,
+    
   });
 
   try {
@@ -112,9 +119,44 @@ const getVerifiedArticle = async (req, res) => {
   }
 };
 
+const deleteArticle = async (req, res) => {
+  const { id } = req.params;
+  console.log("The id is ", id);
+  try {
+    const article = await ArticleSubmissionSchema.findById(id);
+    if (!article) {
+      return res.status(404).send({ message: "Article not found" });
+    }
+
+    // Deleting associated S3 object
+    const deletePromises = [];
+    if (article.content) {
+      deletePromises.push(
+        s3.send(
+          new DeleteObjectCommand({
+            Bucket: process.env.AWS_BUCKET_NAME,
+            Key: article.content.split("/").pop(), // Ensure .pop() is a function
+          })
+        )
+      );
+    }
+
+    await Promise.all(deletePromises);
+
+    // Deleting the article from the database
+    await ArticleSubmissionSchema.deleteOne({ _id: id }); // Using deleteOne() method
+
+    res.status(200).json({ message: "Article deleted successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Error deleting article" });
+  }
+};
+
 export {
   CreateArticleSubmission,
   getArticles,
   UpdateArticleVerification,
   getVerifiedArticle,
+  deleteArticle,
 };

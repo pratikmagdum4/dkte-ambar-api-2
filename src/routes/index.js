@@ -19,7 +19,7 @@ import MainEvents from "./MainEvents/MainEventsRoutes.js";
 import SponsorList from "./SponsorsList/SponsorsListRoutes.js";
 import UpGraduation from "./UpGraduation/UpGraduationRoutes.js";
 import ImageSubmissionRouter from "./Submission/ImageSubmissionRoutes.js";
-import { CreateImageSubmission, getImgUploads, getVerifiedImageByType, UpdateImageVerification } from "../controllers/Submission/ImageSubmissionController.js";
+import { CreateImageSubmission, deleteImageById, getImgUploads, getVerifiedImageByType, UpdateImageVerification } from "../controllers/Submission/ImageSubmissionController.js";
 import multer from "multer";
 import multerS3 from "multer-s3";
 import { S3Client } from "@aws-sdk/client-s3";
@@ -28,9 +28,9 @@ import {
   getArticles,
   getVerifiedArticle,
   UpdateArticleVerification,
- 
+  deleteArticle,
 } from "../controllers/Submission/ArticleSubmissionController.js";
-import { CreateTechArticleSubmission, getTechArticles, getVerifiedTechArticle, UpdateTechArticleVerification } from "../controllers/Submission/TechnicalArticleSubmissionController.js";
+import { CreateTechArticleSubmission, getTechArticles, getVerifiedTechArticle, UpdateTechArticleVerification,deleteTechnicalArticle } from "../controllers/Submission/TechnicalArticleSubmissionController.js";
 import ImageSubmissionSchema from "../models/Submission/ImageSubmissionModel.js";
 import FacultyAchievementPatentGrantSchema from "../models/FacultyAchievements/facultyAchievementPatentGrantModel.js";
 import FacultyAchievementBookPublicationSchema from "../models/FacultyAchievements/facultyAchievementBookPublicationModel.js";
@@ -175,21 +175,26 @@ router.use(
   "/submit/article",
   upload.fields([
     { name: "content", maxCount: 1 },
+    { name: "contentPdf", maxCount: 1 },
     { name: "selfImage", maxCount: 1 },
   ]),
   CreateArticleSubmission
 );
 router.use("/article/get", getArticles);
 router.use("/article/getverified", getVerifiedArticle);
+router.use("/article/delete/:id", deleteArticle);
 router.use("/technical/getverified", getVerifiedTechArticle);
 router.use("/imgupload/getverified", getVerifiedImageByType);
 
 router.use("/technical/get", getTechArticles);
+router.use("/technical/delete/:id", deleteTechnicalArticle);
 router.use("/imgupload/get", getImgUploads);
+router.use("/imgupload/delete/:id", deleteImageById);
 router.use(
   "/submit/technical",
   upload.fields([
     { name: "content", maxCount: 1 },
+    { name: "contentPdf", maxCount: 1 },
     { name: "selfImage", maxCount: 1 },
   ]),
   CreateTechArticleSubmission
