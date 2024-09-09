@@ -12,7 +12,7 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       const email = profile.emails[0].value;
-      const department = "Your_Default_Department"; // Customize if needed
+      const department = "cse"; // Customize if needed
 
       try {
         // Check if the clerk already exists
