@@ -88,11 +88,14 @@ import DiplomaCGPARoutes from "../routes/StudentAchievements/Courses/Diploma/Dip
 import MBACGPARoutes from "../routes/StudentAchievements/Courses/MBA/MbaRoutes.js";
 import { SecondYearDiplomaFCModel, SecondYearDiplomaTMModel, SecondYearDiplomaTTModel } from "../models/StudentAchievements/Courses/Diploma/DiplomaSecondYearModel.js";
 
-
-
+import authRoutes from "../routes/Login/google.js";
+import passport from "passport";
+import '../config/passport.js'
+app.use(passport.initialize());
 
 const router = Router();
 
+app.use("/auth", authRoutes);
 // S3 Client Configuration
 const s3 = new S3Client({
   region: process.env.AWS_REGION,
