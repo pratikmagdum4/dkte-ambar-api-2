@@ -239,4 +239,4 @@ const getClerkProgress = async (req, res) => {
   }
 };
 
-export  {getClerkProgress};
+export { getClerkProgress };
