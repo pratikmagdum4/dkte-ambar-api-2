@@ -88,7 +88,7 @@ import DiplomaCGPARoutes from "../routes/StudentAchievements/Courses/Diploma/Dip
 import MBACGPARoutes from "../routes/StudentAchievements/Courses/MBA/MbaRoutes.js";
 import { SecondYearDiplomaFCModel, SecondYearDiplomaTMModel, SecondYearDiplomaTTModel } from "../models/StudentAchievements/Courses/Diploma/DiplomaSecondYearModel.js";
 
-import authRoutes from "../routes/login/google.js";
+import authRoutes from "./Login/autosign.js";
 
 import passport from "passport";
 
