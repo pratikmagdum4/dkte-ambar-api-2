@@ -88,11 +88,13 @@ import DiplomaCGPARoutes from "../routes/StudentAchievements/Courses/Diploma/Dip
 import MBACGPARoutes from "../routes/StudentAchievements/Courses/MBA/MbaRoutes.js";
 import { SecondYearDiplomaFCModel, SecondYearDiplomaTMModel, SecondYearDiplomaTTModel } from "../models/StudentAchievements/Courses/Diploma/DiplomaSecondYearModel.js";
 
+import authRoutes from "../routes/login/google.js";
 
-
+import passport from "passport";
 
 const router = Router();
-
+router.use(passport.initialize());
+router.use("/api/auth", authRoutes);
 // S3 Client Configuration
 const s3 = new S3Client({
   region: process.env.AWS_REGION,
@@ -113,6 +115,7 @@ const upload = multer({
     },
   }),
 });
+
 
 // Faculty Achievement Routes
 router.use(
@@ -300,5 +303,6 @@ router.use("/studentscgpa/engi", BtechEngineeringCGPARoutes);
 router.use("/studentscgpa/textile", BtechTextileCGPARoutes);
 router.use("/studentscgpa/diploma", DiplomaCGPARoutes);
 router.use("/studentscgpa/mba", MBACGPARoutes);
+
 
 export default router;

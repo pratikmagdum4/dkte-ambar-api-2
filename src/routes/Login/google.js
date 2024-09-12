@@ -17,7 +17,10 @@ router.get(
   (req, res) => {
     const { token, clerk } = req.user;
     // Redirect to frontend with token or return the token
-    res.redirect(`/login/success?token=${token}&role=clerk`);
+    
+    res.status(200).send({token,clerk})
+    console.log("hi i m in google")
+    // res.redirect(`/login/success?token=${token}&role=clerk`);
   }
 );
 

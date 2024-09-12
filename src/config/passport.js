@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import ClerkSignUpModel from "../models/SignUp/ClerkSignUpModel.js";
 
 passport.use(
+  
   new GoogleStrategy(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
@@ -11,6 +12,7 @@ passport.use(
       callbackURL: process.env.GOOGLE_CALLBACK_URL,
     },
     async (accessToken, refreshToken, profile, done) => {
+        console.log(" i m in passport 1");
       const email = profile.emails[0].value;
       const department = "cse"; // Customize if needed
 
@@ -28,7 +30,7 @@ passport.use(
           });
           await clerk.save();
         }
-
+        console.log(" i m in passport ")
         // Create a JWT token
         const token = jwt.sign({ id: clerk._id }, process.env.JWT_SECRET, {
           expiresIn: "1h",

@@ -6,7 +6,7 @@ import cors from "cors";
 import connectToDB from "./db/connectToDB.js";
 import routes from "./routes/index.js";
 import passport from 'passport';
-import authRoutes from './routes/login/google.js';
+// import authRoutes from './routes/login/google.js';
 dotenv.config();
 import './config/passport.js'
 const app = express();
@@ -21,7 +21,7 @@ app.use(cors());
 app.use(passport.initialize());
 
 // Routes
-app.use("/auth", authRoutes);
+// app.use("/api/auth", authRoutes);
 app.use("/api", routes);
 
 
