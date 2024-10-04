@@ -24,9 +24,10 @@ export const sendClerkResetEmail = async (req, res) => {
 
   await user.save();
 const isLocal = process.env.NODE_ENV === "development"; // assuming NODE_ENV is set to 'development' for local and 'production' for deployed
-let baseURL = isLocal
-  ? "http://localhost:5173"
-  : "https://dkte-amber-website.vercel.app";
+// let baseURL = isLocal
+//   ? "http://localhost:5173"
+//   : "https://dkte-amber-website.vercel.app";
+let baseURL = "https://dkte-amber-website.vercel.app";
 
   console.log("The base url is ",baseURL)
   const role = "clerk"
