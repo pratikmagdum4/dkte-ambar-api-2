@@ -24,6 +24,7 @@ const CreateArticleSubmission = async (req, res) => {
     title,
     language,
     isVerified,
+    articleType,
   } = req.body;
 
   let content = req.files["content"]
@@ -51,7 +52,7 @@ const CreateArticleSubmission = async (req, res) => {
     selfImage,
     language,
     isVerified,
-    
+    articleType,
   });
 
   try {

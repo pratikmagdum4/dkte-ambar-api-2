@@ -89,11 +89,122 @@ import MBACGPARoutes from "../routes/StudentAchievements/Courses/MBA/MbaRoutes.j
 import { SecondYearDiplomaFCModel, SecondYearDiplomaTMModel, SecondYearDiplomaTTModel } from "../models/StudentAchievements/Courses/Diploma/DiplomaSecondYearModel.js";
 
 import authRoutes from "./Login/autosign.js";
+import ilovepdfSDK from "ilovepdf-sdk";
+import path from "path";
 
 import passport from "passport";
-
+import ILovePDF from "@ilovepdf/ilovepdf-nodejs";
+import fs from "fs";
 const router = Router();
 router.use(passport.initialize());
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+
+// Set up multer for file uploads
+const upload2 = multer({ dest: "uploads/" }); // Directory to store uploaded files
+process.env.I_LOVE_PUB, process.env.I_LOVE_PRI;
+const projectPublicId = process.env.I_LOVE_PUB;
+const secretKey = process.env.I_LOVE_PRI;
+
+const sdk = new ilovepdfSDK(projectPublicId, secretKey);
+
+// Route to convert Word to PDF
+router.post(
+  "/convert-docx-to-pdf",
+  upload2.single("content"),
+  async (req, res) => {
+    const inputFile = req.file.path;
+    const outputFile = path.resolve(__dirname, "outputs", "output.pdf");
+
+    try {
+      const task = await sdk.createTask("officepdf");
+      await task.addFile(inputFile);
+      await task.process();
+      await task.download(outputFile);
+
+      // Send the converted file back to the client
+      res.download(outputFile, "output.pdf", (err) => {
+        if (err) {
+          console.error("Error downloading the file:", err);
+          res.status(500).send("Error downloading the file");
+        }
+        // Clean up files
+        fs.unlinkSync(inputFile);
+        fs.unlinkSync(outputFile);
+      });
+    } catch (error) {
+      console.error("Error converting DOCX to PDF:", error);
+      res.status(500).send("Error converting DOCX to PDF");
+    }
+  }
+);
+
+// Route to convert PDF to Word
+// router.post(
+//   "/convert-pdf-to-docx",
+//   upload2.single("pdfFile"),
+//   async (req, res) => {
+//     const inputFile = req.file.path;
+//     const outputFile = path.resolve(__dirname, "outputs", "output.docx");
+
+//     try {
+//       const task = await sdk.createTask("pdftoword");
+//       await task.addFile(inputFile);
+//       await task.process();
+//       await task.download(outputFile);
+
+//       // Send the converted file back to the client
+//       res.download(outputFile, "output.docx", (err) => {
+//         if (err) {
+//           console.error("Error downloading the file:", err);
+//           res.status(500).send("Error downloading the file");
+//         }
+//         // Clean up files
+//         fs.unlinkSync(inputFile);
+//         fs.unlinkSync(outputFile);
+//       });
+//     } catch (error) {
+//       console.error("Error converting PDF to DOCX:", error);
+//       res.status(500).send("Error converting PDF to DOCX");
+//     }
+//   }
+// );
+
+
+
+
+// const upload2 = multer({ dest: "uploads/" });
+// // import ILovePDF from "@ilovepdf/ilovepdf-nodejs";
+// const instance = new ILovePDF(process.env.I_LOVE_PUB, process.env.I_LOVE_PRI);
+
+// router.post("/convert-pdf", upload2.single("pdfFile"), async (req, res) => {
+//   try {
+//     console.log("Starting PDF conversion");
+
+//     const task = instance.newTask("officepdf");
+//     await task.addFile(req.file.path);
+//     const result = await task.execute(); // API request is made here
+
+//     const downloadPath = path.join("converted", `${req.file.filename}.docx`);
+//     await result.download(downloadPath);
+
+//     res.download(downloadPath, "converted_file.docx", (err) => {
+//       if (err) throw err;
+
+//       // Cleanup files after download
+//       fs.unlinkSync(req.file.path);
+//       fs.unlinkSync(downloadPath);
+//     });
+//   } catch (error) {
+//     console.error("Conversion error:", error);
+//     res.status(500).send("An error occurred during the conversion process");
+//   }
+// });
+
+
 router.use("/api/auth", authRoutes);
 // S3 Client Configuration
 const s3 = new S3Client({
@@ -109,7 +220,7 @@ const upload = multer({
     s3: s3,
     bucket: process.env.AWS_BUCKET_NAME,
     acl: "private",
-    contentType: multerS3.AUTO_CONTENT_TYPE, // Automatically set the correct content type
+    contentType: multerS3.AUTO_CONTENT_TYPE, // Automatically setting the correct content type
     key: function (req, file, cb) {
       cb(null, Date.now().toString() + file.originalname);
     },

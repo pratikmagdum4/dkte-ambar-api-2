@@ -6,6 +6,7 @@ import cors from "cors";
 import connectToDB from "./db/connectToDB.js";
 import routes from "./routes/index.js";
 import passport from 'passport';
+import fs from "fs-extra";
 // import authRoutes from './routes/login/google.js';
 dotenv.config();
 import './config/passport.js'
@@ -25,15 +26,24 @@ app.use(passport.initialize());
 app.use("/api", routes);
 
 
+const corsOptions = {
+  origin: ["https://dkte-amber-website.vercel.app"], // Your frontend's deployed URL
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"], // Allowed methods
+  allowedHeaders: ["Content-Type", "Authorization"], // Specify headers you want to allow
+  credentials: true, // If using credentials like cookies
+};
+app.use(cors(corsOptions));
 
 app.get("/", (req, res) => {
   res.json({ message: "Hello from Amber server" });
 });
+
 app.get("/auth", (req, res) => {
   res.json({ message: "Hello from Amber server in auth" });
 });
 
 
+fs.ensureDirSync("uploads");
 
 app.listen(PORT, () => {
   connectToDB()

@@ -3,9 +3,15 @@ import jwt from "jsonwebtoken";
 
  const clerkSignup = async (req, res) => {
   const { name, email, password, phoneNumber, department } = req.body;
+  
+console.log("hi i m in ")
 
   try {
+
+
     // Check if the user already exists
+
+    
     const existingClerk = await ClerkSignUpModel.findOne({ email });
     if (existingClerk) {
       return res.status(400).json({ msg: "User already exists" });
