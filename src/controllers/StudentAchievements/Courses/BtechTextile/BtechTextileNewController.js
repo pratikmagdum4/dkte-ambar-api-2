@@ -60,6 +60,7 @@ const saveBtechTextileAchievements = async (req, res) => {
     let students = req.body;
     const { year, dept } = req.params;
     console.log("The year and dept are",dept,year);
+    console.log("the depratment is ",dept)
     const schema = getSchema(year, dept);
     if (!schema) {
       return res.status(400).send("Invalid year or department");

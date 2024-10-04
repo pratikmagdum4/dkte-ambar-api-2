@@ -17,7 +17,7 @@ const SecondYearBtechTextileSchema = new Schema({
   },
   dept: {
     type: String,
-    required: true,
+    required: false,
   },
 });
 
@@ -41,7 +41,7 @@ const SecondYearBtechTextileTTSchema = new Schema({
   },
   dept: {
     type: String,
-    required: true,
+    required: false,
   },
 });
 
@@ -64,7 +64,7 @@ const SecondYearBtechTextileTCSchema = new Schema({
   },
   dept: {
     type: String,
-    required: true,
+    required: false,
   },
 });
 
@@ -87,7 +87,7 @@ const SecondYearBtechTextileTPSchema = new Schema({
   },
   dept: {
     type: String,
-    required: true,
+    required: false,
   },
 });
 
@@ -110,7 +110,7 @@ const SecondYearBtechTextileFTSchema = new Schema({
   },
   dept: {
     type: String,
-    required: true,
+    required: false,
   },
 });
 
@@ -133,7 +133,7 @@ const SecondYearBtechTextileMMTTSchema = new Schema({
   },
   dept: {
     type: String,
-    required: true,
+    required: false,
   },
 });
 
