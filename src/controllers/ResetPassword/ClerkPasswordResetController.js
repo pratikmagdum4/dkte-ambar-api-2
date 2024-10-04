@@ -28,7 +28,7 @@ const baseURL = isLocal
   ? "http://localhost:5173"
   : "https://dkte-amber-website.vercel.app";
 
-  
+  console.log("The base url is ",baseURL)
   const role = "clerk"
   const resetURL = `${baseURL}/${role}/reset-password/${token}`;
 
