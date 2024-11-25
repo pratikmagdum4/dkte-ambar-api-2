@@ -40,6 +40,7 @@ app.get("/", (req, res) => {
 
 app.get("/auth", (req, res) => {
   res.json({ message: "Hello from Amber server in auth" });
+  
 });
 
 

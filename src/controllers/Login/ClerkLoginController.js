@@ -11,6 +11,7 @@ const ClerkLogin  = async (req, res) => {
   const { department } = req.params;
 // console.log("thte depart is ",department)
 // console.log("thte email is ",email)
+
   try {
 console.log("hi im herer in the login  ")
     const existingClerk = await ClerkSignUpModel.findOne({ email, department });

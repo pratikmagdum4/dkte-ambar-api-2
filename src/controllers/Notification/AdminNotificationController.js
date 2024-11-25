@@ -1,40 +1,57 @@
 import AdminNotificationModel from "../../models/Notification/AdminNotificationModel.js";
+
+
+
 const createAdminNotification = async (req, res) => {
   try {
-    const achievementsArray = req.body;
-
-    const savedAchievements = [];
-    for (const achievement of achievementsArray) {
-      const { _id, note, deadline } = achievement;
+    const NotificationArray = req.body;
+    // const dept = req.body.department;
+    const savedNotifications = [];
+   console.log("")
+      const { _id, note, deadline, date,time,dept } = NotificationArray;
       if (_id) {
-        let existingAchievement =
+        let existingNotification =
           await AdminNotificationModel.findByIdAndUpdate(
             _id,
-            { note, deadline },
+            { note, deadline,dept ,date,time},
             { new: true }
           );
-        savedAchievements.push(existingAchievement);
+        savedNotifications.push(existingNotification);
       } else {
         // Create a new achievement document
-        const newAchievement = new AdminNotificationModel({
+        const newNotification = new AdminNotificationModel({
           note,
           deadline,
+          dept,
+          date,
+          time,
         });
         // Save the new achievement
-        const savedAchievement = await newAchievement.save();
-        savedAchievements.push(savedAchievement);
+        const savedNotification = await newNotification.save();
+        savedNotifications.push(savedNotification);
       }
-    }
     // Send response
-    res.status(200).send(savedAchievements);
+    res.status(200).send(savedNotifications);
   } catch (error) {
     console.error("Error saving achievement:", error);
     res.status(400).send(error);
   }
 };
 
-const getAdminNotification = async (req, res) => {
+const getAdminNotificationByDept = async (req, res) => {
   try {
+    const department = req.params.dept;
+    console.log("The dept is ",department)
+    const achievements = await AdminNotificationModel.find({dept:department});
+    res.status(200).send(achievements);
+  } catch (error) {
+    console.log("having error ");
+    res.status(400).send(error);
+  }
+};
+const getAllAdminNotification = async (req, res) => {
+  try {
+    
     const achievements = await AdminNotificationModel.find();
     res.status(200).send(achievements);
   } catch (error) {
@@ -84,7 +101,8 @@ const updateAdminNotification = async (req, res) => {
 
 export {
   createAdminNotification,
-  getAdminNotification,
+  getAdminNotificationByDept,
   deleteAdminNotification,
   updateAdminNotification,
+  getAllAdminNotification,
 };

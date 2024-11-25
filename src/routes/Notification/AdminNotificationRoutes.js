@@ -1,7 +1,10 @@
-import {createAdminNotification,
-  getAdminNotification,
+import {
+  createAdminNotification,
+  getAllAdminNotification,
   deleteAdminNotification,
-  updateAdminNotification,}from "../../controllers/Notification/AdminNotificationController.js";
+  updateAdminNotification,
+  getAdminNotificationByDept,
+} from "../../controllers/Notification/AdminNotificationController.js";
 
 
   import express from "express";
@@ -13,7 +16,8 @@ import {createAdminNotification,
 
   router.post("/submit", createAdminNotification);
 
-  router.get("/getdata", getAdminNotification);
+  router.get("/:dept/getdata", getAdminNotificationByDept);
+  router.get("/getdata", getAllAdminNotification);
 
   router.delete("/:id", deleteAdminNotification);
 

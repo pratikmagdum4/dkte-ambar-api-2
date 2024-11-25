@@ -27,7 +27,7 @@ console.log("dept is ",dept)
     const savedAchievements = [];
     for (const achievement of achievementsArray) {
       const { _id, srno, name, Class } = achievement;
-
+      console.log("class is ",Class)
       if (_id) {
         // Update existing achievement if _id is provided
         let updatedAchievement = await schema.findByIdAndUpdate(
@@ -92,6 +92,8 @@ const updateStudentAchievementSpecialAchievements = async (
 ) => {
   const { id } = req.params;
   const { srno, name, Class } = req.body;
+        console.log("class is ", Class);
+
   try {
     const schema = getSchema(examType);
     const updatedAchievement = await schema.findByIdAndUpdate(

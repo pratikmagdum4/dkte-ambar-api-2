@@ -58,6 +58,7 @@ const getClerkProgress = async (req, res) => {
       await TextilePlacementInternationalPlacementModel.countDocuments({
         dept: department,
       });
+      
     const textilePlacementPackageOfferedCount =
       await TextilePlacementPackageOfferedModel.countDocuments({
         dept: department,
