@@ -71,9 +71,10 @@ import {
 
 import ClerkSignUpRotues from "../routes/SignUp/ClerkSignUpRoutes.js";
 import AdminSignUpRotues from "../routes/SignUp/AdminSignUpRoutes.js";
-// import AdminSignUpRoutes from "../routes/SignUp/AdminSignUpRoutes.js";
+import FacultySignUpRoutes from "../routes/SignUp/CoFacultySignUpRoutes.js";
 import AdminLoginRoutes from "../routes/Login/AdminLoginRoutes.js";
 import ClerkLoginRoutes from "../routes/Login/ClerkLoginRoutes.js";
+import FacultyLoginRoutes from "../routes/Login/CoFacultyLoginRoutes.js";
 
 import ClerkProgressTrackingRoutes from "../routes/ClerkProgressTracking/ClerkProgressTrackingRoutes.js";
 import AdminProfileRoutes from "../routes/Profiles/AdminProfile.js"
@@ -396,9 +397,11 @@ router.use("/staffmember/list", StaffMembersList);
 router.use("/adminnotification", AdminNotification);
 router.use("/signup", ClerkSignUpRotues);
 router.use("/signup", AdminSignUpRotues);
+router.use("/signup", FacultySignUpRoutes);
 router.use("/login/admin", AdminLoginRoutes);
-console.log("hi im nerer")
+
 router.use("/login/clerk", ClerkLoginRoutes);
+router.use("/login/faculty",FacultyLoginRoutes);
 
 
 router.use("/clerk", ClerkProgressTrackingRoutes);

@@ -15,8 +15,10 @@ console.log("email is ",email,password);
     }
 
     const isPasswordCorrect = await bcrypt.compare(
+
       password,
       existingAdmin.password
+      
     );
     console.log(isPasswordCorrect)
     if (!isPasswordCorrect) {

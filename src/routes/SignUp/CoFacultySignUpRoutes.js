@@ -1,14 +1,9 @@
 import express from "express";
-import {
-  adminSignup,
-
-} from "../../controllers/SignUp/AdminSignUpController.js"; 
+import { facultySignup } from "../../controllers/SignUp/CoFacultySignUpController.js";
 
 const router = express.Router();
 
 // POST /signup/clerk - Clerk signup route
-router.post("/admin", adminSignup);
-
+router.post("/faculty", facultySignup);
 
 export default router;
-
